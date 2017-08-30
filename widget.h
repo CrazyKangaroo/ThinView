@@ -23,6 +23,9 @@
 
 #define BTN_LOGIN_VERTICAL_OFFSET 60
 
+#define BTN_DETAIL_HORIZONTAL_OFFSET    250
+#define BTN_DETAIL_VERTICAL_OFFSET 70
+
 namespace Ui {
 class Widget;
 }
@@ -46,6 +49,7 @@ private:
     QLabel * lab_autoLogin;
     QLabel * lab_keepPassword;
     QPushButton * btn_login;
+    QPushButton * btn_detail;
     Ui::Widget *ui;
 };
 

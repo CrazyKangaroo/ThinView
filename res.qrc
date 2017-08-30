@@ -6,5 +6,6 @@
         <file>image/checkbtn_press.png</file>
         <file>image/btnlogin_press.png</file>
         <file>image/btnlogin_nor.png</file>
+        <file>image/netstatus_up.png</file>
     </qresource>
 </RCC>

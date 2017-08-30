@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include <qdesktopwidget.h>
 #include <QDebug>
+#include <QMenu>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -73,9 +74,24 @@ Widget::Widget(QWidget *parent) :
     QPixmap loginPix(":/image/btnlogin_nor.png");
     btn_login = new QPushButton(this);
     btn_login->resize(310, 54);
+    btn_login->setFlat(true);
     btn_login->setIcon(loginPix);
     btn_login->setIconSize(QSize(310, 54));
     btn_login->move(this->width() / 2 - LINE_WIDTH / 2, lab_keepPassword->y() + BTN_LOGIN_VERTICAL_OFFSET);
+
+    QMenu * detailMenu = new QMenu;
+    QAction * leftClick = new QAction("Detail information");
+    detailMenu->addAction(leftClick);
+
+    QPixmap detailPix(":/image/netstatus_up.png");
+    btn_detail = new QPushButton(this);
+    btn_detail->resize(32, 26);
+    btn_detail->setFlat(true);
+    btn_detail->setIcon(detailPix);
+    btn_detail->setIconSize(QSize(32, 26));
+    btn_detail->setMenu(detailMenu);
+    btn_detail->setStyleSheet("QPushButton::menu-indicator{image:none}");
+    btn_detail->move(this->width() - BTN_DETAIL_HORIZONTAL_OFFSET, this->height() - BTN_DETAIL_VERTICAL_OFFSET);
 
     //qDebug()<<Lab_userName->width()<<" "<<Lab_passWord->width();
     //qDebug()<<Lab_userName->height()<<" "<<Lab_passWord->height();
