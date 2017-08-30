@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>image/login.png</file>
         <file>image/logo.png</file>
+        <file>image/checkbtn_nor.png</file>
+        <file>image/checkbtn_press.png</file>
     </qresource>
 </RCC>

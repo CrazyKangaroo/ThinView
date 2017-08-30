@@ -5,12 +5,20 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QCheckBox>
 
 #define LINE_WIDTH 312
 #define LABEL_HORIZONTAL_OFFSET 45
 #define LAB_LOGO_VERTICAL_OFFSET 250
 #define LAB_USERNAME_VERTICAL_OFFSET 60
 #define LAB_PASSWORD_VERTICAL_OFFSET 10
+
+#define CCO_AUTOLOGIN_HORIZONTAL_OFFSET 30
+#define CCO_PASSWORD_HORIZONTAL_OFFSET  140
+#define CHECKBOX_VERTICAL_OFFSET    50
+
+#define LAB_AUTOLOGIN_HORIZONTAL_OFFSET 20
+#define LAB_KEEPPASSWORD_HORIZONTAL_OFFSET 20
 
 namespace Ui {
 class Widget;
@@ -29,7 +37,12 @@ private:
     QLabel * lab_userName;
     QLabel * lab_passWord;
     QComboBox * cbo_userName;
-    QLineEdit * lei_password;
+    QLineEdit * lei_passWord;
+    QCheckBox * cco_autoLogin;
+    QCheckBox * cco_keepPassword;
+    QLabel * lab_autoLogin;
+    QLabel * lab_keepPassword;
+
     Ui::Widget *ui;
 };
 
