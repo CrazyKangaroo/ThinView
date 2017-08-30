@@ -62,7 +62,7 @@ Widget::Widget(QWidget *parent) :
 
     cco_keepPassword = new QCheckBox(this);
     cco_keepPassword->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png)};"
-                                 "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png)};");
+                                    "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png)};");
     cco_keepPassword->move(lab_passWord->x() + CCO_PASSWORD_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
     lab_keepPassword = new QLabel(this);
@@ -70,6 +70,12 @@ Widget::Widget(QWidget *parent) :
     lab_keepPassword->setPalette(fontPalette);
     lab_keepPassword->move(cco_keepPassword->x() + LAB_KEEPPASSWORD_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
+    QPixmap loginPix(":/image/btnlogin_nor.png");
+    btn_login = new QPushButton(this);
+    btn_login->resize(310, 54);
+    btn_login->setIcon(loginPix);
+    btn_login->setIconSize(QSize(310, 54));
+    btn_login->move(this->width() / 2 - LINE_WIDTH / 2, lab_keepPassword->y() + BTN_LOGIN_VERTICAL_OFFSET);
 
     //qDebug()<<Lab_userName->width()<<" "<<Lab_passWord->width();
     //qDebug()<<Lab_userName->height()<<" "<<Lab_passWord->height();

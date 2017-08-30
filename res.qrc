@@ -4,5 +4,7 @@
         <file>image/logo.png</file>
         <file>image/checkbtn_nor.png</file>
         <file>image/checkbtn_press.png</file>
+        <file>image/btnlogin_press.png</file>
+        <file>image/btnlogin_nor.png</file>
     </qresource>
 </RCC>

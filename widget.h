@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QCheckBox>
+#include <QPushButton>
 
 #define LINE_WIDTH 312
 #define LABEL_HORIZONTAL_OFFSET 45
@@ -19,6 +20,8 @@
 
 #define LAB_AUTOLOGIN_HORIZONTAL_OFFSET 20
 #define LAB_KEEPPASSWORD_HORIZONTAL_OFFSET 20
+
+#define BTN_LOGIN_VERTICAL_OFFSET 60
 
 namespace Ui {
 class Widget;
@@ -42,7 +45,7 @@ private:
     QCheckBox * cco_keepPassword;
     QLabel * lab_autoLogin;
     QLabel * lab_keepPassword;
-
+    QPushButton * btn_login;
     Ui::Widget *ui;
 };
 
