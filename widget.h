@@ -23,9 +23,12 @@
 
 #define BTN_LOGIN_VERTICAL_OFFSET 60
 
-#define BTN_DETAIL_HORIZONTAL_OFFSET    250
+#define BTN_DETAIL_HORIZONTAL_OFFSET   220
 #define BTN_DETAIL_VERTICAL_OFFSET 70
 
+#define BTN_SETTING_HORIZONTAL_OFFSET   160
+
+#define BTN_SHUTDOWN_HORIZONTAL_OFFSET  60
 namespace Ui {
 class Widget;
 }
@@ -50,6 +53,8 @@ private:
     QLabel * lab_keepPassword;
     QPushButton * btn_login;
     QPushButton * btn_detail;
+    QPushButton * btn_setting;
+    QPushButton * btn_shutDown;
     Ui::Widget *ui;
 };
 
