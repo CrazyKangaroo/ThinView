@@ -3,6 +3,7 @@
 #include <qdesktopwidget.h>
 #include <QDebug>
 #include <QMenu>
+#include <QTime>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -20,7 +21,19 @@ Widget::Widget(QWidget *parent) :
     QPalette fontPalette;
     fontPalette.setColor(QPalette::WindowText, Qt::white);
     QFont font;
-    font.setPointSize(11);
+    font.setPointSize(FONT_SIZE);
+
+    QTime currentime = QTime::currentTime();
+    QString time = currentime.toString("hh:mm");
+    lab_time = new QLabel(this);
+    lab_time->setText(time);
+    lab_time->setPalette(fontPalette);
+    lab_time->setFont(font);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()),
+            this,SLOT(slot_UpdateTime()));
+    timer->start(1000);
+    lab_time->move(this->width() - LAB_TIME_HORIZONTAL_OFFSET, LAB_TIME_VERTICAL_OFFSET);
 
     QImage * image = new QImage(":/image/logo");
     lab_logo = new QLabel(this);
@@ -117,4 +130,11 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::slot_UpdateTime()
+{
+    QTime currentime = QTime::currentTime();
+    QString time = currentime.toString("hh:mm");
+    lab_time->setText(time);
 }
