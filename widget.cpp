@@ -40,8 +40,13 @@ Widget::Widget(QWidget *parent) :
     cbo_userName = new QComboBox(this);
     cbo_userName->resize(190, 20);
     cbo_userName->setEditable(true);
-    //cbo_userName->setStyleSheet("QComboBox{background:transparent;}"
-    //                            "QComboBox::drop-down{background:transparent}");
+
+    /*
+    cbo_userName->setStyleSheet("QComboBox{background:transparent;}"
+                                "QComboBox::drop-down{boder:0px;background-color:transparent;}"
+                                );
+                                */
+
     cbo_userName->move(lab_userName->x() + lab_userName->width(), lab_userName->y());
 
     lei_passWord = new QLineEdit(this);
@@ -52,8 +57,8 @@ Widget::Widget(QWidget *parent) :
     lei_passWord->move(lab_passWord->x() + lab_passWord->width(), lab_passWord->y());
 
     cco_autoLogin = new QCheckBox(this);
-    cco_autoLogin->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png)};"
-                                 "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png)};");
+    cco_autoLogin->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
+                                 "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png);}");
     cco_autoLogin->move(lab_passWord->x() + CCO_AUTOLOGIN_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
     lab_autoLogin = new QLabel(this);
@@ -62,8 +67,8 @@ Widget::Widget(QWidget *parent) :
     lab_autoLogin->move(lab_passWord->x() + CCO_AUTOLOGIN_HORIZONTAL_OFFSET + LAB_AUTOLOGIN_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
     cco_keepPassword = new QCheckBox(this);
-    cco_keepPassword->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png)};"
-                                    "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png)};");
+    cco_keepPassword->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
+                                    "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png);}");
     cco_keepPassword->move(lab_passWord->x() + CCO_PASSWORD_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
     lab_keepPassword = new QLabel(this);

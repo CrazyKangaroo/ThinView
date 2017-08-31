@@ -29,6 +29,8 @@
 #define BTN_SETTING_HORIZONTAL_OFFSET   160
 
 #define BTN_SHUTDOWN_HORIZONTAL_OFFSET  60
+
+
 namespace Ui {
 class Widget;
 }
