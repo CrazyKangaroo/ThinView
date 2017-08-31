@@ -51,8 +51,6 @@ private:
     QLineEdit * lei_passWord;
     QCheckBox * cco_autoLogin;
     QCheckBox * cco_keepPassword;
-    QLabel * lab_autoLogin;
-    QLabel * lab_keepPassword;
     QPushButton * btn_login;
     QPushButton * btn_detail;
     QPushButton * btn_setting;
