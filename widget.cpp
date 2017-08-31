@@ -42,14 +42,16 @@ Widget::Widget(QWidget *parent) :
     lab_passWord->move(this->width() / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, this->height() / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
 
     cbo_userName = new QComboBox(this);
-    cbo_userName->resize(190, 20);
+    cbo_userName->resize(190, 25);
     cbo_userName->setEditable(true);
-    cbo_userName->setStyleSheet("color:white;"
-                                );
+    cbo_userName->setFont(font);
+    cbo_userName->setStyleSheet("QComboBox{color:white;border:0px;}"
+                                "QComboBox:editable{background:transparent;}"
+                               );
     cbo_userName->move(lab_userName->x() + lab_userName->width(), lab_userName->y());
 
     lei_passWord = new QLineEdit(this);
-    lei_passWord->resize(190, 20);
+    lei_passWord->resize(190, 25);
     lei_passWord->setStyleSheet("background-color:transparent;"
                                 "color:white;"
                                 "border-style:none;");
