@@ -97,12 +97,16 @@ Widget::Widget(QWidget *parent) :
     btn_detail->setStyleSheet("QPushButton::menu-indicator{image:none}");
     btn_detail->move(this->width() - BTN_DETAIL_HORIZONTAL_OFFSET, this->height() - BTN_DETAIL_VERTICAL_OFFSET);
 
-    QPixmap settingPix(":/image/set_nor.png");
+    //QPixmap settingPix(":/image/set_nor.png");
     btn_setting = new QPushButton(this);
     btn_setting->resize(80, 25);
     btn_setting->setFlat(true);
-    btn_setting->setIcon(settingPix);
-    btn_setting->setIconSize(QSize(80, 25));
+    //btn_setting->setIcon(settingPix);
+    //btn_setting->setIconSize(QSize(80, 25));
+    btn_setting->setStyleSheet("QPushButton{border-image:url(:/image/set_nor.png);}"
+                               "QPushButton:hover{border-image:url(:/image/set_press.png);}"
+                               "QPushButton:pressed{border-image:url(:/image/set_press.png);}"
+                               );
     btn_setting->move(this->width() - BTN_SETTING_HORIZONTAL_OFFSET, btn_detail->y());
 
     QPixmap shutDownPix(":/image/shutdown_norold.png");
