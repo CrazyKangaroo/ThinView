@@ -87,14 +87,16 @@ Widget::Widget(QWidget *parent) :
     QAction * leftClick = new QAction("Detail information");
     detailMenu->addAction(leftClick);
 
-    QPixmap detailPix(":/image/netstatus_up.png");
+    //QPixmap detailPix(":/image/netstatus_up.png");
     btn_detail = new QPushButton(this);
     btn_detail->resize(32, 26);
     btn_detail->setFlat(true);
-    btn_detail->setIcon(detailPix);
-    btn_detail->setIconSize(QSize(32, 26));
+    //btn_detail->setIcon(detailPix);
+    //btn_detail->setIconSize(QSize(32, 26));
     btn_detail->setMenu(detailMenu);
-    btn_detail->setStyleSheet("QPushButton::menu-indicator{image:none}");
+    btn_detail->setStyleSheet("QPushButton::menu-indicator{image:none}"
+                              "QPushButton{border-image:url(:/image/netstatus_up.png);}"
+                              "QPushButton:pressed{border-image:url(:/image/netstatus_up.png);}");
     btn_detail->move(this->width() - BTN_DETAIL_HORIZONTAL_OFFSET, this->height() - BTN_DETAIL_VERTICAL_OFFSET);
 
     //QPixmap settingPix(":/image/set_nor.png");
