@@ -40,12 +40,10 @@ Widget::Widget(QWidget *parent) :
     cbo_userName = new QComboBox(this);
     cbo_userName->resize(190, 20);
     cbo_userName->setEditable(true);
-
     /*
-    cbo_userName->setStyleSheet("QComboBox{background:transparent;}"
-                                "QComboBox::drop-down{boder:0px;background-color:transparent;}"
-                                );
-                                */
+    cbo_userName->setStyleSheet("QComboBox:editable{background:transparent}"
+
+                                );*/
 
     cbo_userName->move(lab_userName->x() + lab_userName->width(), lab_userName->y());
 
@@ -76,12 +74,13 @@ Widget::Widget(QWidget *parent) :
     lab_keepPassword->setPalette(fontPalette);
     lab_keepPassword->move(cco_keepPassword->x() + LAB_KEEPPASSWORD_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
 
-    QPixmap loginPix(":/image/btnlogin_nor.png");
     btn_login = new QPushButton(this);
     btn_login->resize(310, 54);
     btn_login->setFlat(true);
-    btn_login->setIcon(loginPix);
-    btn_login->setIconSize(QSize(310, 54));
+    btn_login->setStyleSheet("QPushButton{border-image:url(:/image/btnlogin_nor.png);}"
+                             "QPushButton:hover{border-image:url(:/image/btnlogin_press.png);}"
+                             "QPushButton:pressed{border-image:url(:/image/btnlogin_press.png);}"
+                             );
     btn_login->move(this->width() / 2 - LINE_WIDTH / 2, lab_keepPassword->y() + BTN_LOGIN_VERTICAL_OFFSET);
 
     QMenu * detailMenu = new QMenu;
