@@ -109,12 +109,16 @@ Widget::Widget(QWidget *parent) :
                                );
     btn_setting->move(this->width() - BTN_SETTING_HORIZONTAL_OFFSET, btn_detail->y());
 
-    QPixmap shutDownPix(":/image/shutdown_norold.png");
+    //QPixmap shutDownPix(":/image/shutdown_norold.png");
     btn_shutDown = new QPushButton(this);
-    btn_shutDown->resize(28, 25);
+    btn_shutDown->resize(24, 24);
     btn_shutDown->setFlat(true);
-    btn_shutDown->setIcon(shutDownPix);
-    btn_shutDown->setIconSize(QSize(28, 25));
+    //btn_shutDown->setIcon(shutDownPix);
+    //btn_shutDown->setIconSize(QSize(28, 25));
+    btn_shutDown->setStyleSheet("QPushButton{border-image:url(:/image/exit_nor.png);}"
+                                "QPushButton:hover{border-image:url(:/image/exit_press.png);}"
+                                "QPushButton:pressed{border-image:url(:/image/exit_press.png);}"
+                );
     btn_shutDown->move(this->width() - BTN_SHUTDOWN_HORIZONTAL_OFFSET, btn_detail->y());
 
     //qDebug()<<Lab_userName->width()<<" "<<Lab_passWord->width();

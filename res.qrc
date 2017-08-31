@@ -7,8 +7,9 @@
         <file>image/btnlogin_nor.png</file>
         <file>image/netstatus_up.png</file>
         <file>image/set_nor.png</file>
-        <file>image/shutdown_norold.png</file>
         <file>image/btnlogin_press.png</file>
         <file>image/set_press.png</file>
+        <file>image/exit_nor.png</file>
+        <file>image/exit_press.png</file>
     </qresource>
 </RCC>
