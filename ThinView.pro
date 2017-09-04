@@ -33,5 +33,7 @@ HEADERS += \
 FORMS += \
         widget.ui
 
+TRANSLATIONS = ThinView_zh_CN.ts
+
 RESOURCES += \
     res.qrc

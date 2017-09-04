@@ -9,6 +9,9 @@
 #include <QPushButton>
 #include <QTimer>
 
+#define BASE_WIDTH  1920
+#define BASE_HIGHT  1080
+
 #define LINE_WIDTH 312
 #define LABEL_HORIZONTAL_OFFSET 45
 #define LAB_LOGO_VERTICAL_OFFSET 250
@@ -59,6 +62,7 @@ private:
     QPushButton * btn_shutDown;
     QTimer * timer;
     Ui::Widget *ui;
+    void AutoSize(QWidget * widget, int screenWidth, int screenHeight);
 public slots:
     void slot_UpdateTime();
 };

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>image/login.png</file>
         <file>image/logo.png</file>
         <file>image/checkbtn_nor.png</file>
         <file>image/checkbtn_press.png</file>
@@ -11,5 +10,7 @@
         <file>image/set_press.png</file>
         <file>image/exit_nor.png</file>
         <file>image/exit_press.png</file>
+        <file>language/ThinView_zh_CN.qm</file>
+        <file>image/login.png</file>
     </qresource>
 </RCC>
