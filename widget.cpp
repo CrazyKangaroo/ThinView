@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMenu>
 #include <QTime>
+#include "settingdialog.h"
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -127,6 +128,7 @@ Widget::Widget(QWidget *parent) :
                                "QPushButton:pressed{border-image:url(:/image/set_press.png);}"
                                );
     btn_setting->move(BASE_WIDTH - BTN_SETTING_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SETTING_VERTICAL_OFFSET);
+    connect(btn_setting, SIGNAL(clicked(bool)),this, SLOT(slot_BtnSettingClick()));
     AutoSize(btn_setting, this->width(), this->height());
 
     btn_shutDown = new QPushButton(this);
@@ -169,4 +171,20 @@ void Widget::AutoSize(QWidget *widget, int screenWidth, int screenHeight)
     int newWidgetHei = (int)(widgetHei * verticalRatio);
 
     widget->setGeometry(newWidgetX, newWidgetY, newWidgetWid, newWidgetHei);
+}
+
+void Widget::slot_BtnSettingClick()
+{
+    SettingDialog * dialog = new SettingDialog;
+
+    int result = dialog->exec();
+
+    if (result == QDialog::Accepted)
+    {
+
+    }
+    else if (result == QDialog::Rejected)
+    {
+
+    }
 }

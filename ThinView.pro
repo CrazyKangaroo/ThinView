@@ -25,13 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        widget.cpp
+        widget.cpp \
+    titlebar.cpp \
+    settingdialog.cpp
 
 HEADERS += \
-        widget.h
+        widget.h \
+    titlebar.h \
+    settingdialog.h
 
 FORMS += \
-        widget.ui
+        widget.ui \
+    titlebar.ui \
+    settingdialog.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

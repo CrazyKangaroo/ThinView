@@ -73,6 +73,7 @@ private:
     void AutoSize(QWidget * widget, int screenWidth, int screenHeight);
 public slots:
     void slot_UpdateTime();
+    void slot_BtnSettingClick();
 };
 
 #endif // WIDGET_H
