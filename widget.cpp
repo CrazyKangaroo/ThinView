@@ -15,12 +15,8 @@ Widget::Widget(QWidget *parent) :
     this->resize(desktop->width(), desktop->height());
     this->setAutoFillBackground(true);
     QPalette palette;
-    //AutoSize(this, desktop->width(), desktop->height());
-    //palette.setBrush(QPalette::Background, QBrush(QPixmap(":/image/login.png")));
-    qDebug()<<this->size();
     palette.setBrush(QPalette::Background, QBrush(QPixmap(":/image/login.png").scaled(this->size())));
     this->setPalette(palette);
-
 
     QPalette fontPalette;
     fontPalette.setColor(QPalette::WindowText, Qt::white);
@@ -37,22 +33,22 @@ Widget::Widget(QWidget *parent) :
     connect(timer, SIGNAL(timeout()),
             this,SLOT(slot_UpdateTime()));
     timer->start(1000);
-    lab_time->move(this->width() - LAB_TIME_HORIZONTAL_OFFSET, LAB_TIME_VERTICAL_OFFSET);
+    lab_time->move(BASE_WIDTH - LAB_TIME_HORIZONTAL_OFFSET, LAB_TIME_VERTICAL_OFFSET);
+    AutoSize(lab_time, this->width(), this->height());
 
     QImage * image = new QImage(":/image/logo");
     lab_logo = new QLabel(this);
-    //qDebug()<<image->width()<< " "<<image->height();
-    lab_logo->resize(image->width() + 50, image->height() + 50);
-    lab_logo->setPixmap(QPixmap::fromImage(*image));
-    lab_logo->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HIGHT / 2 - LAB_LOGO_VERTICAL_OFFSET);
-    AutoSize(lab_logo, desktop->width(), desktop->height());
+    lab_logo->resize(image->size());
+    lab_logo->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 - LAB_LOGO_VERTICAL_OFFSET);
+    AutoSize(lab_logo, this->width(), this->height());
+    lab_logo->setPixmap(QPixmap::fromImage(*image).scaled(lab_logo->size()));
 
     lab_userName = new QLabel(this);
     lab_userName->resize(70, 30);
     lab_userName->setText(tr("User"));
     lab_userName->setPalette(fontPalette);
     lab_userName->setFont(font);
-    lab_userName->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, 1080 / 2 - LAB_USERNAME_VERTICAL_OFFSET);
+    lab_userName->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 - LAB_USERNAME_VERTICAL_OFFSET);
     AutoSize(lab_userName, desktop->width(), desktop->height());
 
     lab_passWord = new QLabel(this);
@@ -60,7 +56,7 @@ Widget::Widget(QWidget *parent) :
     lab_passWord->setText(tr("Password"));
     lab_passWord->setPalette(fontPalette);
     lab_passWord->setFont(font);
-    lab_passWord->move(1920 / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, 1080 / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
+    lab_passWord->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
     AutoSize(lab_passWord, desktop->width(), desktop->height());
 
     cbo_userName = new QComboBox(this);
@@ -70,7 +66,8 @@ Widget::Widget(QWidget *parent) :
     cbo_userName->setStyleSheet("QComboBox{color:white;border:0px;}"
                                 "QComboBox:editable{background:transparent;}"
                                );
-    cbo_userName->move(lab_userName->x() + lab_userName->width(), lab_userName->y());
+    cbo_userName->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CBO_USERNAME_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 - LAB_USERNAME_VERTICAL_OFFSET);
+    AutoSize(cbo_userName, this->width(), this->height());
 
     lei_passWord = new QLineEdit(this);
     lei_passWord->resize(190, 25);
@@ -79,21 +76,24 @@ Widget::Widget(QWidget *parent) :
                                 "border-style:none;");
     lei_passWord->setFont(font);
     lei_passWord->setEchoMode(QLineEdit::Password);
-    lei_passWord->move(lab_passWord->x() + lab_passWord->width(), lab_passWord->y());
+    lei_passWord->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + LEI_PASSWORD_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
+    AutoSize(lei_passWord, this->width(), this->height());
 
     cco_autoLogin = new QCheckBox(this);
     cco_autoLogin->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
                                  "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png);}");
     cco_autoLogin->setText(tr("Auto login"));
     cco_autoLogin->setPalette(fontPalette);
-    cco_autoLogin->move(lab_passWord->x() + CCO_AUTOLOGIN_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
+    cco_autoLogin->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CCO_AUTOLOGIN_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET);
+    AutoSize(cco_autoLogin, this->width(), this->height());
 
     cco_keepPassword = new QCheckBox(this);
     cco_keepPassword->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
                                     "QCheckBox::indicator:checked{image:url(:/image/checkbtn_press.png);}");
     cco_keepPassword->setText(tr("Keep password"));
     cco_keepPassword->setPalette(fontPalette);
-    cco_keepPassword->move(lab_passWord->x() + CCO_PASSWORD_HORIZONTAL_OFFSET, lab_passWord->y() + CHECKBOX_VERTICAL_OFFSET);
+    cco_keepPassword->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CCO_PASSWORD_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET);
+    AutoSize(cco_keepPassword, this->width(), this->height());
 
     btn_login = new QPushButton(this);
     btn_login->resize(310, 54);
@@ -102,7 +102,8 @@ Widget::Widget(QWidget *parent) :
                              "QPushButton:hover{border-image:url(:/image/btnlogin_press.png);}"
                              "QPushButton:pressed{border-image:url(:/image/btnlogin_press.png);}"
                              );
-    btn_login->move(this->width() / 2 - LINE_WIDTH / 2, cco_keepPassword->y() + BTN_LOGIN_VERTICAL_OFFSET);
+    btn_login->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET + BTN_LOGIN_VERTICAL_OFFSET);
+    AutoSize(btn_login, desktop->width(), desktop->height());
 
     QMenu * detailMenu = new QMenu;
     QAction * leftClick = new QAction(tr("Detail information"));
@@ -115,7 +116,8 @@ Widget::Widget(QWidget *parent) :
     btn_detail->setStyleSheet("QPushButton::menu-indicator{image:none}"
                               "QPushButton{border-image:url(:/image/netstatus_up.png);}"
                               "QPushButton:pressed{border-image:url(:/image/netstatus_up.png);}");
-    btn_detail->move(this->width() - BTN_DETAIL_HORIZONTAL_OFFSET, this->height() - BTN_DETAIL_VERTICAL_OFFSET);
+    btn_detail->move(BASE_WIDTH - BTN_DETAIL_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_DETAIL_VERTICAL_OFFSET);
+    AutoSize(btn_detail, this->width(), this->height());
 
     btn_setting = new QPushButton(this);
     btn_setting->resize(80, 25);
@@ -124,7 +126,8 @@ Widget::Widget(QWidget *parent) :
                                "QPushButton:hover{border-image:url(:/image/set_press.png);}"
                                "QPushButton:pressed{border-image:url(:/image/set_press.png);}"
                                );
-    btn_setting->move(this->width() - BTN_SETTING_HORIZONTAL_OFFSET, btn_detail->y());
+    btn_setting->move(BASE_WIDTH - BTN_SETTING_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SETTING_VERTICAL_OFFSET);
+    AutoSize(btn_setting, this->width(), this->height());
 
     btn_shutDown = new QPushButton(this);
     btn_shutDown->resize(24, 24);
@@ -133,10 +136,8 @@ Widget::Widget(QWidget *parent) :
                                 "QPushButton:hover{border-image:url(:/image/exit_press.png);}"
                                 "QPushButton:pressed{border-image:url(:/image/exit_press.png);}"
                                 );
-    btn_shutDown->move(this->width() - BTN_SHUTDOWN_HORIZONTAL_OFFSET, btn_detail->y());
-
-
-    qDebug()<<desktop->width()<<" "<<desktop->height();
+    btn_shutDown->move(BASE_WIDTH - BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SHUTDOWN_VERTICAL_OFFSET);
+    AutoSize(btn_shutDown, this->width(), this->height());
 }
 
 Widget::~Widget()
