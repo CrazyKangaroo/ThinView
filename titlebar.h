@@ -18,6 +18,7 @@ public:
     void SetIconSize(int width, int height);
     void SetButtonSize(int width, int height);
     void SetButtonIcon(QString filePath);
+    void SetTitleBarWidth(int width, int height);
     ~TitleBar();
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);

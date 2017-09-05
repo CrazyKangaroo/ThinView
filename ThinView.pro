@@ -28,19 +28,27 @@ SOURCES += \
         widget.cpp \
     settingdialog.cpp \
     titlebar.cpp \
-    passworderror.cpp
+    passworderror.cpp \
+    setting.cpp \
+    customtabstyle.cpp \
+    customtab.cpp
 
 HEADERS += \
         widget.h \
     settingdialog.h \
     titlebar.h \
-    passworderror.h
+    passworderror.h \
+    setting.h \
+    customtabstyle.h \
+    customtab.h
 
 FORMS += \
         widget.ui \
     settingdialog.ui \
     titlebar.ui \
-    passworderror.ui
+    passworderror.ui \
+    setting.ui \
+    customtab.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QPalette>
 #include "passworderror.h"
+#include "setting.h"
 
 SettingDialog::SettingDialog(QWidget *parent) :
     QDialog(parent),
@@ -40,14 +41,24 @@ SettingDialog::~SettingDialog()
 void SettingDialog::onBtn_OKClick()
 {
     QString password = ui->lei_password->text();
-    if (password == "wbxy1234")
+    if (password == "1")
     {
+        Setting * pDialog = new Setting;
+        int result = pDialog->exec();
 
+        if (result == QDialog::Accepted)
+        {
+
+        }
+        else if (result == QDialog::Rejected)
+        {
+
+        }
     }
     else
     {
-        PasswordError * dialog = new PasswordError;
-        int result = dialog->exec();
+        PasswordError * pDialog = new PasswordError;
+        int result = pDialog->exec();
 
         if (result == QDialog::Accepted)
         {

@@ -101,3 +101,8 @@ void TitleBar::SetButtonIcon(QString filePath)
     pButtonClose->setStyleSheet("QPushButton{border-image:url(" + filePath +");}"
                                 "QPushButton:pressed{border-image:url(" + filePath + ");}");
 }
+
+void TitleBar::SetTitleBarWidth(int width, int height)
+{
+    this->resize(width, height);
+}
