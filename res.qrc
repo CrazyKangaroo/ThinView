@@ -13,5 +13,6 @@
         <file>language/ThinView_zh_CN.qm</file>
         <file>image/login.png</file>
         <file>image/logothin.png</file>
+        <file>image/close_set_22.png</file>
     </qresource>
 </RCC>

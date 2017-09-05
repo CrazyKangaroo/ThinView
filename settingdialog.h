@@ -2,6 +2,7 @@
 #define SETTINGDIALOG_H
 
 #include <QDialog>
+#include "titlebar.h"
 
 namespace Ui {
 class SettingDialog;
@@ -17,6 +18,8 @@ public:
 
 private:
     Ui::SettingDialog *ui;
+    TitleBar * pTitleBar;
+    void initTitleBar();
 };
 
 #endif // SETTINGDIALOG_H
