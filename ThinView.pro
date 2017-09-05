@@ -27,17 +27,20 @@ SOURCES += \
         main.cpp \
         widget.cpp \
     settingdialog.cpp \
-    titlebar.cpp
+    titlebar.cpp \
+    passworderror.cpp
 
 HEADERS += \
         widget.h \
     settingdialog.h \
-    titlebar.h
+    titlebar.h \
+    passworderror.h
 
 FORMS += \
         widget.ui \
     settingdialog.ui \
-    titlebar.ui
+    titlebar.ui \
+    passworderror.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

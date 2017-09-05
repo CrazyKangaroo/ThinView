@@ -2,6 +2,7 @@
 #include "ui_settingdialog.h"
 #include <QVBoxLayout>
 #include <QPalette>
+#include "passworderror.h"
 
 SettingDialog::SettingDialog(QWidget *parent) :
     QDialog(parent),
@@ -10,17 +11,12 @@ SettingDialog::SettingDialog(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
-    pTitleBar = new TitleBar(this);
+    TitleBar * pTitleBar = new TitleBar(this);
     pTitleBar->SetButtonSize(10, 8);
     pTitleBar->SetButtonIcon(":/image/close_set_22.png");
     installEventFilter(pTitleBar);
     setWindowTitle(" ");
     setWindowIcon(QIcon(":/image/logothin.png"));
-
-    //QPalette palette;
-    //palette.setColor(QPalette::Background, QColor(50, 50, 50));
-    //setAutoFillBackground(true);
-    //setPalette(palette);
 
     QVBoxLayout *pLayout = new QVBoxLayout();
     pLayout->addWidget(pTitleBar);
@@ -29,14 +25,37 @@ SettingDialog::SettingDialog(QWidget *parent) :
     pLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(pLayout);
 
-    setAttribute(Qt::WA_DeleteOnClose);
     ui->lab_password->setText(tr("please enter password"));
     ui->btn_ok->setText(tr("OK"));
     ui->btn_cancle->setText(tr("Cancle"));
 
+    connect(ui->btn_ok, SIGNAL(clicked(bool)), this, SLOT(onBtn_OKClick()));
 }
 
 SettingDialog::~SettingDialog()
 {
     delete ui;
+}
+
+void SettingDialog::onBtn_OKClick()
+{
+    QString password = ui->lei_password->text();
+    if (password == "wbxy1234")
+    {
+
+    }
+    else
+    {
+        PasswordError * dialog = new PasswordError;
+        int result = dialog->exec();
+
+        if (result == QDialog::Accepted)
+        {
+
+        }
+        else if (result == QDialog::Rejected)
+        {
+
+        }
+    }
 }
