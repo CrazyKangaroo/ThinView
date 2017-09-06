@@ -34,6 +34,8 @@ CustomTab::CustomTab(QWidget *parent) :
     ui->lab_dnsAddr3->setText(tr("The third DNS server "));
     ui->btn_network_save->setText(tr("Save"));
 
+    ui->lab_AppName->setText(tr("Terminal login software"));
+    ui->lab_version->setText(tr("Version : "));
 }
 
 CustomTab::~CustomTab()

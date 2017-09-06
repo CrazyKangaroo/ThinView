@@ -9,12 +9,12 @@
         <file>image/set_press.png</file>
         <file>image/exit_nor.png</file>
         <file>image/exit_press.png</file>
-        <file>language/ThinView_zh_CN.qm</file>
         <file>image/login.png</file>
         <file>image/logothin.png</file>
         <file>image/close_set_22.png</file>
         <file>image/sh_logo.png</file>
         <file>image/logo.png</file>
         <file>image/close_set.png</file>
+        <file>language/ThinView_zh_CN.qm</file>
     </qresource>
 </RCC>

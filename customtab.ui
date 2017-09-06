@@ -631,14 +631,14 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_16">
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="lab_AppName">
                <property name="text">
                 <string>TextLabel</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="lab_version">
                <property name="text">
                 <string>TextLabel</string>
                </property>
