@@ -1,7 +1,9 @@
 #include "setting.h"
 #include "ui_setting.h"
-#include "customtabstyle.h"
+#include "customtab.h"
 #include "titlebar.h"
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 Setting::Setting(QWidget *parent) :
     QDialog(parent),
@@ -10,21 +12,22 @@ Setting::Setting(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     TitleBar * pTitleBar = new TitleBar(this);
-    pTitleBar->SetButtonSize(10, 8);
-    pTitleBar->SetTitleBarWidth(800, 600);
-    pTitleBar->SetButtonIcon(":/image/close_set_22.png");
+    pTitleBar->SetButtonSize(14, 12);
+    pTitleBar->SetTitleBarWidth(500, 600);
+    pTitleBar->SetIconSize(113, 26);
+    pTitleBar->SetButtonIcon(":/image/close_set.png");
     installEventFilter(pTitleBar);
-    setWindowTitle(" ");
-    setWindowIcon(QIcon(":/image/logothin.png"));
+    setWindowTitle(tr("Configuration"));
+    setWindowIcon(QIcon(":/image/logo.png"));
+    CustomTab * pCustomTab = new CustomTab(this);
 
-    QVBoxLayout *pLayout = new QVBoxLayout();
+    QVBoxLayout * pLayout = new QVBoxLayout();
     pLayout->addWidget(pTitleBar);
-    pLayout->addStretch();
+    //pLayout->addStretch();
     pLayout->setSpacing(0);
     pLayout->setContentsMargins(0, 0, 0, 0);
+    pLayout->addWidget(pCustomTab);
     setLayout(pLayout);
-
-    ui->tabWidget->tabBar()->setStyle(new CustomTabStyle);
 }
 
 Setting::~Setting()

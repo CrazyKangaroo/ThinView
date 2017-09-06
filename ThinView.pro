@@ -30,7 +30,6 @@ SOURCES += \
     titlebar.cpp \
     passworderror.cpp \
     setting.cpp \
-    customtabstyle.cpp \
     customtab.cpp
 
 HEADERS += \

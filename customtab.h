@@ -3,6 +3,13 @@
 
 #include <QWidget>
 
+enum PageIndex
+{
+    page0 = 0,
+    page1,
+    page2,
+};
+
 namespace Ui {
 class CustomTab;
 }

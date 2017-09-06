@@ -27,10 +27,16 @@ TitleBar::TitleBar(QWidget *parent) :
     setAutoFillBackground(true);
     setPalette(palette);
 
+    QPalette fontPalette;
+    fontPalette.setColor(QPalette::WindowText, Qt::white);
+    pLabelTitle->setPalette(fontPalette);
+
     QHBoxLayout * pLayout = new QHBoxLayout(this);
     pLayout->addWidget(pLabelIcon);
-    pLayout->addSpacing(5);
+    //pLayout->addSpacing(5);
+    pLayout->addStretch();
     pLayout->addWidget(pLabelTitle);
+    pLayout->addStretch();
     pLayout->addWidget(pButtonClose);
     pLayout->setSpacing(0);
     pLayout->setContentsMargins(5, 0, 5, 0);

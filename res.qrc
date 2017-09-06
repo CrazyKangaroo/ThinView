@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>image/logo.png</file>
         <file>image/checkbtn_nor.png</file>
         <file>image/checkbtn_press.png</file>
         <file>image/btnlogin_nor.png</file>
@@ -14,5 +13,8 @@
         <file>image/login.png</file>
         <file>image/logothin.png</file>
         <file>image/close_set_22.png</file>
+        <file>image/sh_logo.png</file>
+        <file>image/logo.png</file>
+        <file>image/close_set.png</file>
     </qresource>
 </RCC>

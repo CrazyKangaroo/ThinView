@@ -37,7 +37,7 @@ Widget::Widget(QWidget *parent) :
     lab_time->move(BASE_WIDTH - LAB_TIME_HORIZONTAL_OFFSET, LAB_TIME_VERTICAL_OFFSET);
     AutoSize(lab_time, this->width(), this->height());
 
-    QImage * image = new QImage(":/image/logo");
+    QImage * image = new QImage(":/image/sh_logo.png");
     lab_logo = new QLabel(this);
     lab_logo->resize(image->size());
     lab_logo->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 - LAB_LOGO_VERTICAL_OFFSET);
