@@ -20,7 +20,7 @@
       <enum>QTabWidget::West</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -284,7 +284,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_save">
+              <widget class="QPushButton" name="btn_basic_save">
                <property name="text">
                 <string>PushButton</string>
                </property>
@@ -310,14 +310,14 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="rbn_dhcp">
                <property name="text">
                 <string>RadioButton</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="rbn_staticIP">
                <property name="text">
                 <string>RadioButton</string>
                </property>
@@ -360,21 +360,21 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_10">
                <item>
-                <widget class="QLabel" name="label">
+                <widget class="QLabel" name="lab_ipAddr">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="lab_subnetMask">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_3">
+                <widget class="QLabel" name="lab_gateway">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -385,13 +385,13 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_9">
                <item>
-                <widget class="QLineEdit" name="lineEdit"/>
+                <widget class="QLineEdit" name="lei_ipAddr"/>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_2"/>
+                <widget class="QLineEdit" name="lei_subnetMask"/>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_3"/>
+                <widget class="QLineEdit" name="lei_gateway"/>
                </item>
               </layout>
              </item>
@@ -450,14 +450,14 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_14">
              <item>
-              <widget class="QRadioButton" name="radioButton_3">
+              <widget class="QRadioButton" name="rbn_autoDNS">
                <property name="text">
                 <string>RadioButton</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_4">
+              <widget class="QRadioButton" name="rbn_manualDNS">
                <property name="text">
                 <string>RadioButton</string>
                </property>
@@ -500,21 +500,21 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
-                <widget class="QLabel" name="label_4">
+                <widget class="QLabel" name="lab_dnsAddr1">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_5">
+                <widget class="QLabel" name="lab_dnsAddr2">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_6">
+                <widget class="QLabel" name="lab_dnsAddr3">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -525,13 +525,13 @@
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QLineEdit" name="lineEdit_4"/>
+                <widget class="QLineEdit" name="lei_dnsAddr1"/>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_5"/>
+                <widget class="QLineEdit" name="lei_dnsAddr2"/>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_6"/>
+                <widget class="QLineEdit" name="lei_dnsAddr3"/>
                </item>
               </layout>
              </item>
@@ -581,13 +581,98 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="btn_network_save">
              <property name="text">
               <string>PushButton</string>
              </property>
             </widget>
            </item>
           </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Page</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_18">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_15">
+         <item>
+          <spacer name="horizontalSpacer_14">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_17">
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
