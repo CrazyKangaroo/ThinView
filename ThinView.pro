@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +30,10 @@ SOURCES += \
     titlebar.cpp \
     passworderror.cpp \
     setting.cpp \
-    customtab.cpp
+    customtab.cpp \
+    https.cpp \
+    xml.cpp \
+    vmdata.cpp
 
 HEADERS += \
         widget.h \
@@ -39,7 +42,10 @@ HEADERS += \
     passworderror.h \
     setting.h \
     customtabstyle.h \
-    customtab.h
+    customtab.h \
+    https.h \
+    xml.h \
+    vmdata.h
 
 FORMS += \
         widget.ui \
