@@ -71,6 +71,7 @@ private:
     QTimer * timer;
     Ui::Widget *ui;
     void AutoSize(QWidget * widget, int screenWidth, int screenHeight);
+    void UIInit();
 public slots:
     void slot_UpdateTime();
     void slot_BtnSettingClick();

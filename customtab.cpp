@@ -8,6 +8,16 @@ CustomTab::CustomTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    UIIint();
+}
+
+CustomTab::~CustomTab()
+{
+    delete ui;
+}
+
+void CustomTab::UIIint()
+{
     ui->tabWidget->setTabText(page0, tr("Basic settings"));
     ui->tabWidget->setTabText(page1, tr("Network"));
     ui->tabWidget->setTabText(page2, tr("About"));
@@ -36,9 +46,4 @@ CustomTab::CustomTab(QWidget *parent) :
 
     ui->lab_AppName->setText(tr("Terminal login software"));
     ui->lab_version->setText(tr("Version : "));
-}
-
-CustomTab::~CustomTab()
-{
-    delete ui;
 }

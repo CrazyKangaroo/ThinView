@@ -11,6 +11,16 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    UIInit();
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+
+void Widget::UIInit()
+{
     this->setWindowFlags(Qt::FramelessWindowHint);
     QDesktopWidget * desktop = QApplication::desktop();
     this->resize(desktop->width(), desktop->height());
@@ -140,11 +150,6 @@ Widget::Widget(QWidget *parent) :
                                 );
     btn_shutDown->move(BASE_WIDTH - BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SHUTDOWN_VERTICAL_OFFSET);
     AutoSize(btn_shutDown, this->width(), this->height());
-}
-
-Widget::~Widget()
-{
-    delete ui;
 }
 
 void Widget::slot_UpdateTime()

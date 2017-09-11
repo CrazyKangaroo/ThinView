@@ -10,6 +10,17 @@ Setting::Setting(QWidget *parent) :
     ui(new Ui::Setting)
 {
     ui->setupUi(this);
+
+    UIInit();
+}
+
+Setting::~Setting()
+{
+    delete ui;
+}
+
+void Setting::UIInit()
+{
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     TitleBar * pTitleBar = new TitleBar(this);
     pTitleBar->SetButtonSize(14, 12);
@@ -28,9 +39,4 @@ Setting::Setting(QWidget *parent) :
     pLayout->setContentsMargins(0, 0, 0, 0);
     pLayout->addWidget(pCustomTab);
     setLayout(pLayout);
-}
-
-Setting::~Setting()
-{
-    delete ui;
 }

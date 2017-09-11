@@ -18,7 +18,8 @@ public:
 
 private:
     Ui::SettingDialog *ui;
-    void initTitleBar();
+    void UIInit();
+    void TitleBarInit();
 
 public slots:
     void onBtn_OKClick();

@@ -8,6 +8,17 @@ TitleBar::TitleBar(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    UIInit();
+    connect(pButtonClose, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+}
+
+TitleBar::~TitleBar()
+{
+    delete ui;
+}
+
+void TitleBar::UIInit()
+{
     setFixedHeight(30);
 
     pLabelIcon = new QLabel(this);
@@ -41,13 +52,6 @@ TitleBar::TitleBar(QWidget *parent) :
     pLayout->setSpacing(0);
     pLayout->setContentsMargins(5, 0, 5, 0);
     setLayout(pLayout);
-
-    connect(pButtonClose, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
-}
-
-TitleBar::~TitleBar()
-{
-    delete ui;
 }
 
 void TitleBar::onClicked()

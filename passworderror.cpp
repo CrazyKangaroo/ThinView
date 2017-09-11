@@ -10,6 +10,16 @@ PasswordError::PasswordError(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    UIInit();
+}
+
+PasswordError::~PasswordError()
+{
+    delete ui;
+}
+
+void PasswordError::UIInit()
+{
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     TitleBar * pTitleBar = new TitleBar(this);
     pTitleBar->SetButtonSize(10, 8);
@@ -26,10 +36,4 @@ PasswordError::PasswordError(QWidget *parent) :
     setLayout(pLayout);
 
     ui->label->setText(tr("Password error!"));
-    //ui->label->move(this->width() / 2 - ui->label->width() / 2, (this->height() - pTitleBar->height())/ 2);
-}
-
-PasswordError::~PasswordError()
-{
-    delete ui;
 }

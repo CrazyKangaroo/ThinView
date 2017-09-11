@@ -11,6 +11,17 @@ SettingDialog::SettingDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    UIInit();
+    connect(ui->btn_ok, SIGNAL(clicked(bool)), this, SLOT(onBtn_OKClick()));
+}
+
+SettingDialog::~SettingDialog()
+{
+    delete ui;
+}
+
+void SettingDialog::UIInit()
+{
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     TitleBar * pTitleBar = new TitleBar(this);
     pTitleBar->SetButtonSize(10, 8);
@@ -29,13 +40,6 @@ SettingDialog::SettingDialog(QWidget *parent) :
     ui->lab_password->setText(tr("please enter password"));
     ui->btn_ok->setText(tr("OK"));
     ui->btn_cancle->setText(tr("Cancle"));
-
-    connect(ui->btn_ok, SIGNAL(clicked(bool)), this, SLOT(onBtn_OKClick()));
-}
-
-SettingDialog::~SettingDialog()
-{
-    delete ui;
 }
 
 void SettingDialog::onBtn_OKClick()

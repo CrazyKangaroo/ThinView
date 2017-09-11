@@ -27,6 +27,7 @@ private:
     QLabel * pLabelIcon;
     QLabel * pLabelTitle;
     QPushButton * pButtonClose;
+    void UIInit();
 private slots:
     void onClicked();
 };

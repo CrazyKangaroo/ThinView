@@ -24,6 +24,7 @@ public:
 
 private:
     Ui::CustomTab *ui;
+    void UIIint();
 };
 
 #endif // CUSTOMTAB_H

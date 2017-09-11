@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::PasswordError *ui;
+    void UIInit();
 };
 
 #endif // PASSWORDERROR_H

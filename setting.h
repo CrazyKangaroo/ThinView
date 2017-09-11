@@ -30,6 +30,7 @@ private:
     QCheckBox * pCco_autoReslotion;
     QCheckBox * pCco_manualReslotion;
     QPushButton * pBtn_save;
+    void UIInit();
 };
 
 #endif // SETTING_H
