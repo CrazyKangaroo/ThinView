@@ -22,14 +22,6 @@ public:
 
 private:
     Ui::Setting *ui;
-    QLabel * pLab_note;
-    QLabel * pLab_serverAddr;
-    QLabel * pLab_port;
-    QLineEdit * pLei_serverAddr;
-    QLineEdit * pLei_port;
-    QCheckBox * pCco_autoReslotion;
-    QCheckBox * pCco_manualReslotion;
-    QPushButton * pBtn_save;
     void UIInit();
 };
 
