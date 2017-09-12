@@ -31,9 +31,9 @@ SOURCES += \
     passworderror.cpp \
     setting.cpp \
     customtab.cpp \
-    https.cpp \
     xml.cpp \
-    vmdata.cpp
+    vmdata.cpp \
+    https.cpp
 
 HEADERS += \
         widget.h \
@@ -43,9 +43,9 @@ HEADERS += \
     setting.h \
     customtabstyle.h \
     customtab.h \
-    https.h \
     xml.h \
-    vmdata.h
+    vmdata.h \
+    https.h
 
 FORMS += \
         widget.ui \

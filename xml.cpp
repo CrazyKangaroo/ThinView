@@ -9,7 +9,7 @@ QList<VmData> XML::ParseXML(QString xmlText)
 {
     this->xmlText = xmlText;
 
-    vmList = new QList<VmData>();
+    //vmList = new QList<VmData>();
     QXmlStreamReader reader(xmlText);
     while (!reader.atEnd())
     {
@@ -88,14 +88,14 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 {
                     tempVmData = new VmData;
                     QString strId = attributes.value("id").toString();
-                    tempVmData.id = strId;
+                    tempVmData->id = strId;
                     //qDebug()<<"strId:"<<strId;
                 }
             }
             else if (strElementName == "name")
             {
                 //qDebug()<<"name:"<<reader.readElementText();
-                tempVmData.name = reader.readElementText();
+                tempVmData->name = reader.readElementText();
             }
             else if (strElementName == "topology")
             {
@@ -103,7 +103,7 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 if (attributes.hasAttribute("sockets"))
                 {
                     int nSocket = attributes.value("sockets").toInt();
-                    tempVmData.vCpu = nSocket;
+                    tempVmData->vCpu = nSocket;
                     //qDebug()<<"strSocket:"<<strSocket;
                 }
             }
@@ -114,27 +114,27 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 {
                     QString strType = attributes.value("type").toString();
                     //qDebug()<<"os type:"<<strSocket;
-                    tempVmData.os = strType;
+                    tempVmData->os = strType;
                 }
             }
             else if (strElementName == "state")
             {
                 //qDebug()<<"state:"<<reader.readElementText();
                 QString strState = reader.readElementText();
-                if (strState.toUpper() == VmState::DOWN)
+                if (strState == "down")
                 {
-                    tempVmData.state = VmState::DOWN;
+                    tempVmData->state = VmState::DOWN;
                 }
-                else if (strState.toUpper() == VmState::UP)
+                else if (strState == "up")
                 {
-                    tempVmData.state = VmState::UP;
+                    tempVmData->state = VmState::UP;
                 }
             }
             else if (strElementName == "memory")
             {
                 //qDebug()<<"memory:"<<reader.readElementText();
                 unsigned int memory = reader.readElementText().toUInt();
-                tempVmData.memory = memory / (1024 * 1024 * 1024);
+                tempVmData->memory = memory / (1024 * 1024 * 1024);
             }
             else if (strElementName == "usb")
             {
@@ -143,14 +143,19 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 if (strElementName == "enabled")
                 {
                     //qDebug()<<"usb enabled:"<<reader.readElementText();
-                    tempVmData.usbEnable = reader.readElementText();
-                    vmList.append(tempVmData);
+                    tempVmData->usbEnable = reader.readElementText();
+                    vmList.append(*tempVmData);
                 }
             }
             else if (strElementName == "address")
             {
                 //qDebug()<<"address:"<<reader.readElementText();
-                tempVmData.address = reader.readElementText();
+                tempVmData->address = reader.readElementText();
+            }
+            else if (strElementName == "domain")
+            {
+                reader.readNextStartElement();
+                reader.readNextStartElement();
             }
             /*
             else if (strElementName == "port")

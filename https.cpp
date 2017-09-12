@@ -1,18 +1,18 @@
 #include "https.h"
 
-Https::Https()
+Https::Https(QObject *parent) : QObject(parent)
 {
 
 }
 
-Https::Https(QString url, QString username, QString password)
+void Https::HttpInit(QString url, QString username, QString password)
 {
     SslInit();
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(slot_ReplyFinished(QNetworkReply *)));
 
-    QByteArray text(username + ":" + password);
+    QByteArray text((username + ":" + password).toUtf8());
     QNetworkRequest request;
     request.setUrl(url);
     request.setSslConfiguration(sslConfig);
@@ -37,8 +37,9 @@ void Https::slot_ReplyFinished(QNetworkReply *reply)
         QTextCodec * pCodec = QTextCodec::codecForName("utf8");
         xmlText = pCodec->toUnicode(reply->readAll());
         reply->deleteLater();
-        XML xml = new XML;
+        XML xml;
         vmList = xml.ParseXML(xmlText);
+        emit SendVmList(vmList);
     }
     else
     {

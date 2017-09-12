@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTimer>
+#include "https.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080
@@ -68,6 +69,7 @@ private:
     QPushButton * btn_detail;
     QPushButton * btn_setting;
     QPushButton * btn_shutDown;
+    Https https;
     QTimer * timer;
     Ui::Widget *ui;
     void AutoSize(QWidget * widget, int screenWidth, int screenHeight);
@@ -75,6 +77,8 @@ private:
 public slots:
     void slot_UpdateTime();
     void slot_BtnSettingClick();
+    void onBtnLoginClick();
+    void slot_GetVmList(QList<VmData> vmList);
 };
 
 #endif // WIDGET_H

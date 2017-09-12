@@ -3,22 +3,29 @@
 
 #include <QtNetwork>
 #include "xml.h"
+#include <QObject>
+#include "vmdata.h"
 
-#define URL "https://192.168.110.222/ovirt-engine/api/vms"
+#define URL "https://192.168.110.254/ovirt-engine/api/vms"
+#define USERNAME "admin@internal"
+#define PASSWORD "shencloud"
 
-class Https
+class Https : public QObject
 {
+    Q_OBJECT
 public:
-    Https();
-    Https(QString url, QString username, QString password);
+    explicit Https(QObject *parent = 0);
+    void HttpInit(QString url, QString username, QString password);
 private:
     QString xmlText;
     QNetworkAccessManager * manager;
     QSslConfiguration sslConfig;
-    QList vmList;
-private slots:
-    void slot_ReplyFinished(QNetworkReply * reply);
+    QList<VmData> vmList;
     void SslInit();
+signals:
+    void SendVmList(QList<VmData>);
+public slots:
+    void slot_ReplyFinished(QNetworkReply * reply);
 };
 
 #endif // HTTPS_H

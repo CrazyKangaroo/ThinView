@@ -2,12 +2,12 @@
 
 VmData::VmData()
 {
-    id = NULL;
-    name = NULL;
-    os = NULL;
+    id = "";
+    name = "";
+    os = "";
     state = VmState::DOWN;
     vCpu = 0;
     memory = 0;
-    address = NULL;
-    usbEnable = NULL;
+    address = "";
+    usbEnable = "";
 }

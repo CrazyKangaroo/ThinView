@@ -114,6 +114,7 @@ void Widget::UIInit()
                              "QPushButton:pressed{border-image:url(:/image/btnlogin_press.png);}"
                              );
     btn_login->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET + BTN_LOGIN_VERTICAL_OFFSET);
+    connect(btn_login, SIGNAL(clicked(bool)), this, SLOT(onBtnLoginClick()));
     AutoSize(btn_login, desktop->width(), desktop->height());
 
     QMenu * detailMenu = new QMenu;
@@ -191,5 +192,20 @@ void Widget::slot_BtnSettingClick()
     else if (result == QDialog::Rejected)
     {
 
+    }
+}
+
+void Widget::onBtnLoginClick()
+{
+    connect(&https, SIGNAL(SendVmList(QList<VmData>)), this, SLOT(slot_GetVmList(QList<VmData>)));
+    https.HttpInit(URL, USERNAME, PASSWORD);
+}
+
+void Widget::slot_GetVmList(QList<VmData> vmList)
+{
+    qDebug()<<vmList.size();
+    for (int i = 0; i < vmList.size(); i++)
+    {
+        qDebug()<<vmList[i].name;
     }
 }
