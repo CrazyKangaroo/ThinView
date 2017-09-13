@@ -16,5 +16,18 @@
         <file>image/logo.png</file>
         <file>image/close_set.png</file>
         <file>language/ThinView_zh_CN.qm</file>
+        <file>image/vmlistwindow_sh.png</file>
+        <file>image/start_press.png</file>
+        <file>image/start.png</file>
+        <file>image/close.png</file>
+        <file>image/close_press.png</file>
+        <file>image/restart.png</file>
+        <file>image/restart_press.png</file>
+        <file>image/desktop_press.png</file>
+        <file>image/desktop.png</file>
+        <file>image/sleep_press.png</file>
+        <file>image/sleep.png</file>
+        <file>image/loginout_press.png</file>
+        <file>image/loginout_nor.png</file>
     </qresource>
 </RCC>

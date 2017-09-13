@@ -33,7 +33,8 @@ SOURCES += \
     customtab.cpp \
     xml.cpp \
     vmdata.cpp \
-    https.cpp
+    https.cpp \
+    vmlistdialog.cpp
 
 HEADERS += \
         widget.h \
@@ -45,7 +46,8 @@ HEADERS += \
     customtab.h \
     xml.h \
     vmdata.h \
-    https.h
+    https.h \
+    vmlistdialog.h
 
 FORMS += \
         widget.ui \
@@ -53,7 +55,8 @@ FORMS += \
     titlebar.ui \
     passworderror.ui \
     setting.ui \
-    customtab.ui
+    customtab.ui \
+    vmlistdialog.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

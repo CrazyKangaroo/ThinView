@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QTimer>
 #include "https.h"
+#include "vmlistdialog.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080

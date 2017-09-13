@@ -151,6 +151,9 @@ void Widget::UIInit()
                                 );
     btn_shutDown->move(BASE_WIDTH - BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SHUTDOWN_VERTICAL_OFFSET);
     AutoSize(btn_shutDown, this->width(), this->height());
+
+    VmListDialog * dialog = new VmListDialog;
+    dialog->show();
 }
 
 void Widget::slot_UpdateTime()
@@ -203,9 +206,15 @@ void Widget::onBtnLoginClick()
 
 void Widget::slot_GetVmList(QList<VmData> vmList)
 {
+    /*
     qDebug()<<vmList.size();
     for (int i = 0; i < vmList.size(); i++)
     {
         qDebug()<<vmList[i].name;
+    }*/
+    if (vmList.size() > 1)
+    {
+        VmListDialog * dialog = new VmListDialog;
+        dialog->show();
     }
 }
