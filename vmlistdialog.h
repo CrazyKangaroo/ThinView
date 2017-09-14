@@ -9,6 +9,54 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include "autosize.h"
+
+#define BASE_WIDTH  1920
+#define BASE_HEIGHT 1080
+
+#define WIDGETUSER_HORIZONTAL_OFFSET    500
+#define WIDGETUSER_VERTICAL_OFFSET  30
+
+#define BTN_EXIT_HORIZONTAL_OFFSET  100
+#define BTN_EXIT_VERTICAL_OFFSET    25
+
+#define BTN_SHUTDOWN_HORIZONTAL_OFFSET  50
+#define BTN_SHUTDOWN_VERTICAL_OFFSET    25
+
+#define LIST_VMLIST_HORIZONTAL_OFFSET   0
+#define LIST_VMLIST_VERTICAL_OFFSET     80
+#define LIST_VMLIST_SIZE_HORIZONTAL_OFFSET  430
+#define LIST_VMLIST_SIZE_VERTICAL_OFFSET    80
+
+#define BTN_RUN_HORIZONTAL_OFFSET   20
+#define BTN_RUN_VERTICAL_OFFSET 20
+
+#define LAB_RUN_HORIZONTAL_OFFSET   45
+#define LAB_RUN_VERTICAL_OFFSET 25
+
+#define BTN_CLOSE_HORIZONTAL_OFFSET 85
+#define BTN_CLOEE_VERTICAL_OFFSET   22
+
+#define LAB_CLOSE_HORIZONTAL_OFFSET 110
+#define LAB_CLOSE_VERTICAL_OFFSET   25
+
+#define BTN_REBOOT_HORIZONTAL_OFFSET    155
+#define BTN_REBOOT_VERTICAL_OFFSET  20
+
+#define LAB_REBOOT_HORIZONTAL_OFFSET    185
+#define LAB_REBOOT_VERTICAL_OFFSET  25
+
+#define BTN_DESKTOP_HORIZONTAL_OFFSET   235
+#define BTN_DESKTOP_VERTICAL_OFFSET 20
+
+#define LAB_DESKTOP_HORIZONTAL_OFFSET   270
+#define LAB_DESKTOP_VERTICAL_OFFSET 25
+
+#define BTN_REFRESH_HORIZONTAL_OFFSET   330
+#define BTN_REFRESH_VERTICAL_OFFSET 20
+
+#define LAB_REFRESH_HORIZONTAL_OFFSET   365
+#define LAB_REFRESH_VERTICAL_OFFSET     25
 
 namespace Ui {
 class VmListDialog;
@@ -43,10 +91,6 @@ private:
     int width;
     int height;
     void UIInit();
-    void AutoSize(QWidget *widget, int screenWidth, int screenHeight, int baseWidth, int baseHeight);
-    void AutoSize(QWidget *widget, int screenWidth, int screenHeight);
-    void AutoMove(QWidget *widget, int screenWidth, int screenHeight);
-    void AutoMove(QWidget *widget, int screenWidth, int screenHeight, int baseWidth , int baseHeight);
 };
 
 #endif // VMLISTDIALOG_H

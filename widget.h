@@ -10,6 +10,7 @@
 #include <QTimer>
 #include "https.h"
 #include "vmlistdialog.h"
+#include "autosize.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080
@@ -38,8 +39,8 @@
 #define BTN_SETTING_HORIZONTAL_OFFSET   160
 #define BTN_SETTING_VERTICAL_OFFSET   70
 
-#define BTN_SHUTDOWN_HORIZONTAL_OFFSET  60
-#define BTN_SHUTDOWN_VERTICAL_OFFSET    70
+#define MAIN_BTN_SHUTDOWN_HORIZONTAL_OFFSET  60
+#define MAIN_BTN_SHUTDOWN_VERTICAL_OFFSET    70
 
 #define LAB_TIME_HORIZONTAL_OFFSET  90
 #define LAB_TIME_VERTICAL_OFFSET    30
@@ -73,8 +74,8 @@ private:
     Https https;
     QTimer * timer;
     Ui::Widget *ui;
-    void AutoSize(QWidget * widget, int screenWidth, int screenHeight);
     void UIInit();
+    void TimerInit();
 public slots:
     void slot_UpdateTime();
     void slot_BtnSettingClick();

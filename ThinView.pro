@@ -34,7 +34,8 @@ SOURCES += \
     xml.cpp \
     vmdata.cpp \
     https.cpp \
-    vmlistdialog.cpp
+    vmlistdialog.cpp \
+    autosize.cpp
 
 HEADERS += \
         widget.h \
@@ -47,7 +48,8 @@ HEADERS += \
     xml.h \
     vmdata.h \
     https.h \
-    vmlistdialog.h
+    vmlistdialog.h \
+    autosize.h
 
 FORMS += \
         widget.ui \

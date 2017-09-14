@@ -36,22 +36,21 @@ void Widget::UIInit()
 
     QTime currentime = QTime::currentTime();
     QString time = currentime.toString("hh:mm");
+
     lab_time = new QLabel(this);
     lab_time->setText(time);
     lab_time->setPalette(fontPalette);
     lab_time->setFont(font);
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()),
-            this,SLOT(slot_UpdateTime()));
-    timer->start(1000);
     lab_time->move(BASE_WIDTH - LAB_TIME_HORIZONTAL_OFFSET, LAB_TIME_VERTICAL_OFFSET);
-    AutoSize(lab_time, this->width(), this->height());
+    AutoSize::AutoChangeSize(lab_time, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
+
+    TimerInit();
 
     QImage * image = new QImage(":/image/sh_logo.png");
     lab_logo = new QLabel(this);
     lab_logo->resize(image->size());
     lab_logo->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 - LAB_LOGO_VERTICAL_OFFSET);
-    AutoSize(lab_logo, this->width(), this->height());
+    AutoSize::AutoChangeSize(lab_logo, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
     lab_logo->setPixmap(QPixmap::fromImage(*image).scaled(lab_logo->size()));
 
     lab_userName = new QLabel(this);
@@ -60,7 +59,7 @@ void Widget::UIInit()
     lab_userName->setPalette(fontPalette);
     lab_userName->setFont(font);
     lab_userName->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 - LAB_USERNAME_VERTICAL_OFFSET);
-    AutoSize(lab_userName, desktop->width(), desktop->height());
+    AutoSize::AutoChangeSize(lab_userName, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
 
     lab_passWord = new QLabel(this);
     lab_passWord->resize(70, 30);
@@ -68,7 +67,7 @@ void Widget::UIInit()
     lab_passWord->setPalette(fontPalette);
     lab_passWord->setFont(font);
     lab_passWord->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
-    AutoSize(lab_passWord, desktop->width(), desktop->height());
+    AutoSize::AutoChangeSize(lab_passWord, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
 
     cbo_userName = new QComboBox(this);
     cbo_userName->resize(190, 25);
@@ -78,7 +77,7 @@ void Widget::UIInit()
                                 "QComboBox:editable{background:transparent;}"
                                );
     cbo_userName->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CBO_USERNAME_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 - LAB_USERNAME_VERTICAL_OFFSET);
-    AutoSize(cbo_userName, this->width(), this->height());
+    AutoSize::AutoChangeSize(cbo_userName, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     lei_passWord = new QLineEdit(this);
     lei_passWord->resize(190, 25);
@@ -88,7 +87,7 @@ void Widget::UIInit()
     lei_passWord->setFont(font);
     lei_passWord->setEchoMode(QLineEdit::Password);
     lei_passWord->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + LEI_PASSWORD_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET);
-    AutoSize(lei_passWord, this->width(), this->height());
+    AutoSize::AutoChangeSize(lei_passWord, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     cco_autoLogin = new QCheckBox(this);
     cco_autoLogin->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
@@ -96,7 +95,7 @@ void Widget::UIInit()
     cco_autoLogin->setText(tr("Auto login"));
     cco_autoLogin->setPalette(fontPalette);
     cco_autoLogin->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CCO_AUTOLOGIN_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET);
-    AutoSize(cco_autoLogin, this->width(), this->height());
+    AutoSize::AutoChangeSize(cco_autoLogin, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     cco_keepPassword = new QCheckBox(this);
     cco_keepPassword->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtn_nor.png);}"
@@ -104,7 +103,7 @@ void Widget::UIInit()
     cco_keepPassword->setText(tr("Keep password"));
     cco_keepPassword->setPalette(fontPalette);
     cco_keepPassword->move(BASE_WIDTH / 2 - LINE_WIDTH / 2 + LABEL_HORIZONTAL_OFFSET + CCO_PASSWORD_HORIZONTAL_OFFSET, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET);
-    AutoSize(cco_keepPassword, this->width(), this->height());
+    AutoSize::AutoChangeSize(cco_keepPassword, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     btn_login = new QPushButton(this);
     btn_login->resize(310, 54);
@@ -115,7 +114,7 @@ void Widget::UIInit()
                              );
     btn_login->move(BASE_WIDTH / 2 - LINE_WIDTH / 2, BASE_HEIGHT / 2 + LAB_PASSWORD_VERTICAL_OFFSET + CHECKBOX_VERTICAL_OFFSET + BTN_LOGIN_VERTICAL_OFFSET);
     connect(btn_login, SIGNAL(clicked(bool)), this, SLOT(onBtnLoginClick()));
-    AutoSize(btn_login, desktop->width(), desktop->height());
+    AutoSize::AutoChangeSize(btn_login, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
 
     QMenu * detailMenu = new QMenu;
     QAction * leftClick = new QAction(tr("Detail information"));
@@ -129,7 +128,7 @@ void Widget::UIInit()
                               "QPushButton{border-image:url(:/image/netstatus_up.png);}"
                               "QPushButton:pressed{border-image:url(:/image/netstatus_up.png);}");
     btn_detail->move(BASE_WIDTH - BTN_DETAIL_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_DETAIL_VERTICAL_OFFSET);
-    AutoSize(btn_detail, this->width(), this->height());
+    AutoSize::AutoChangeSize(btn_detail, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     btn_setting = new QPushButton(this);
     btn_setting->resize(80, 25);
@@ -140,7 +139,7 @@ void Widget::UIInit()
                                );
     btn_setting->move(BASE_WIDTH - BTN_SETTING_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SETTING_VERTICAL_OFFSET);
     connect(btn_setting, SIGNAL(clicked(bool)),this, SLOT(slot_BtnSettingClick()));
-    AutoSize(btn_setting, this->width(), this->height());
+    AutoSize::AutoChangeSize(btn_setting, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     btn_shutDown = new QPushButton(this);
     btn_shutDown->resize(24, 24);
@@ -149,8 +148,8 @@ void Widget::UIInit()
                                 "QPushButton:hover{border-image:url(:/image/exit_press.png);}"
                                 "QPushButton:pressed{border-image:url(:/image/exit_press.png);}"
                                 );
-    btn_shutDown->move(BASE_WIDTH - BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - BTN_SHUTDOWN_VERTICAL_OFFSET);
-    AutoSize(btn_shutDown, this->width(), this->height());
+    btn_shutDown->move(BASE_WIDTH - MAIN_BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - MAIN_BTN_SHUTDOWN_VERTICAL_OFFSET);
+    AutoSize::AutoChangeSize(btn_shutDown, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
 
     VmListDialog * dialog = new VmListDialog;
     dialog->show();
@@ -161,25 +160,6 @@ void Widget::slot_UpdateTime()
     QTime currentime = QTime::currentTime();
     QString time = currentime.toString("hh:mm");
     lab_time->setText(time);
-}
-
-void Widget::AutoSize(QWidget *widget, int screenWidth, int screenHeight)
-{
-    int widgetX = widget->x();
-    int widgetY = widget->y();
-    int widgetWid = widget->width();
-    int widgetHei = widget->height();
-
-    double herizontalRatio = screenWidth / 1920.0;
-    double verticalRatio = screenHeight / 1080.0;
-
-    int newWidgetX = (int)(widgetX * herizontalRatio);
-    int newWidgetY = (int)(widgetY * verticalRatio);
-
-    int newWidgetWid = (int)(widgetWid * herizontalRatio);
-    int newWidgetHei = (int)(widgetHei * verticalRatio);
-
-    widget->setGeometry(newWidgetX, newWidgetY, newWidgetWid, newWidgetHei);
 }
 
 void Widget::slot_BtnSettingClick()
@@ -196,6 +176,13 @@ void Widget::slot_BtnSettingClick()
     {
 
     }
+}
+
+void Widget::TimerInit()
+{
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(slot_UpdateTime()));
+    timer->start(1000);
 }
 
 void Widget::onBtnLoginClick()
