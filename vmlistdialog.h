@@ -5,11 +5,14 @@
 #include <QLabel>
 #include <QDesktopWidget>
 #include <QDebug>
-#include <QListView>
+#include <QTableView>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include "autosize.h"
+#include <QStandardItemModel>
+#include "customtableview.h"
+#include "vmdata.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT 1080
@@ -71,6 +74,17 @@ public:
     ~VmListDialog();
 
 private:
+    enum ColumnIndex{
+        COLUMN_0 = 0,
+        COLUMN_1,
+        COLUMN_2,
+        COLUMN_3,
+        COLUMN_4,
+        COLUMN_5,
+        COLUMN_6,
+        COLUMN_7,
+        MAX_CULUMN_SIZE,
+    };
     Ui::VmListDialog *ui;
     QLabel * lab_CurrenLoginUser;
     QLabel * lab_user;
@@ -86,11 +100,18 @@ private:
     QPushButton * btn_refresh;
     QPushButton * btn_exit;
     QPushButton * btn_shutDown;
-    QListView * lisv_vmList;
+    QTableView * tablev_vmList;
     QWidget * widget;
+    QStandardItemModel * model;
+    QList<VmData> vmList;
     int width;
     int height;
     void UIInit();
+    void VmListInit();
+    void TabViewModelInit();
+    void TabViewInit();
+public slots:
+    void slot_GetVmList(QList<VmData> vmList);
 };
 
 #endif // VMLISTDIALOG_H

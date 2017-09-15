@@ -35,7 +35,8 @@ SOURCES += \
     vmdata.cpp \
     https.cpp \
     vmlistdialog.cpp \
-    autosize.cpp
+    autosize.cpp \
+    customtableview.cpp
 
 HEADERS += \
         widget.h \
@@ -49,7 +50,8 @@ HEADERS += \
     vmdata.h \
     https.h \
     vmlistdialog.h \
-    autosize.h
+    autosize.h \
+    customtableview.h
 
 FORMS += \
         widget.ui \

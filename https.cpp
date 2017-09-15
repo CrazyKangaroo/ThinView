@@ -39,6 +39,15 @@ void Https::slot_ReplyFinished(QNetworkReply *reply)
         reply->deleteLater();
         XML xml;
         vmList = xml.ParseXML(xmlText);
+
+        /*
+        for (int i = 0; i < vmList.size(); i++)
+        {
+            qDebug()<<vmList[i].name<<"#"<<vmList[i].os<<"#" \
+                    <<vmList[i].state<<"#"<<vmList[i].vCpu<<"#" \
+                    <<vmList[i].memory<<"#"<<vmList[i].address<<"#" \
+                    <<vmList[i].usbEnable;
+        }*/
         emit SendVmList(vmList);
     }
     else

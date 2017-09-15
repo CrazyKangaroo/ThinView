@@ -65,10 +65,10 @@ void VmListDialog::UIInit()
     btn_shutDown->move(BASE_WIDTH - BTN_SHUTDOWN_HORIZONTAL_OFFSET, BTN_SHUTDOWN_VERTICAL_OFFSET);
     AutoSize::AutoChangeSize(btn_shutDown, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
 
-    lisv_vmList = new QListView(this);
-    lisv_vmList->move(LIST_VMLIST_HORIZONTAL_OFFSET, LIST_VMLIST_VERTICAL_OFFSET);
-    lisv_vmList->resize(BASE_WIDTH - LIST_VMLIST_SIZE_HORIZONTAL_OFFSET, BASE_HEIGHT - LIST_VMLIST_SIZE_VERTICAL_OFFSET);
-    AutoSize::AutoChangeSize(lisv_vmList, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
+    tablev_vmList = new CustomTableView(this);
+    tablev_vmList->move(LIST_VMLIST_HORIZONTAL_OFFSET, LIST_VMLIST_VERTICAL_OFFSET);
+    tablev_vmList->resize(BASE_WIDTH - LIST_VMLIST_SIZE_HORIZONTAL_OFFSET, BASE_HEIGHT - LIST_VMLIST_SIZE_VERTICAL_OFFSET);
+    AutoSize::AutoChangeSize(tablev_vmList, desktop->width(), desktop->height(), BASE_WIDTH, BASE_HEIGHT);
 
     widget = new QWidget(this);
     widget->move(BASE_WIDTH - LIST_VMLIST_SIZE_HORIZONTAL_OFFSET, LIST_VMLIST_SIZE_VERTICAL_OFFSET);
@@ -151,4 +151,61 @@ void VmListDialog::UIInit()
     lab_refresh->setText(tr("Refresh"));
     lab_refresh->move(LAB_REFRESH_HORIZONTAL_OFFSET, LAB_REFRESH_VERTICAL_OFFSET);
     AutoSize::AutoMove(lab_refresh, widget->width(), widget->height(), width, height);
+}
+
+void VmListDialog::VmListInit()
+{
+    TabViewModelInit();
+    TabViewInit();
+}
+
+void VmListDialog::TabViewModelInit()
+{
+    model = new QStandardItemModel(this);
+    model->setRowCount(vmList.size());
+    model->setColumnCount(MAX_CULUMN_SIZE);
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_0, new QStandardItem(QObject::tr("")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_1, new QStandardItem(QObject::tr("virtual machine")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_2, new QStandardItem(QObject::tr("OS")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_3, new QStandardItem(QObject::tr("state")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_4, new QStandardItem(QObject::tr("vCpu")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_5, new QStandardItem(QObject::tr("memory")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_6, new QStandardItem(QObject::tr("host address")));
+    model->setHorizontalHeaderItem(ColumnIndex::COLUMN_7, new QStandardItem(QObject::tr("USB policy")));
+
+    for (int i = 0; i < vmList.size(); i++)
+    {
+        //QStandardItem * item = new QStandardItem;
+        model->setItem(i, COLUMN_1, new QStandardItem(vmList[i].name));
+        model->setItem(i, COLUMN_2, new QStandardItem(vmList[i].os));
+        model->setItem(i, COLUMN_3, new QStandardItem(vmList[i].state));
+        model->setItem(i, COLUMN_4, new QStandardItem(QString::number(vmList[i].vCpu)));
+        model->setItem(i, COLUMN_5, new QStandardItem(QString::number(vmList[i].memory) + "GB"));
+        model->setItem(i, COLUMN_6, new QStandardItem(vmList[i].address));
+        model->setItem(i, COLUMN_7, new QStandardItem(vmList[i].usbEnable));
+    }
+}
+
+void VmListDialog::TabViewInit()
+{
+    tablev_vmList->setModel(model);
+    tablev_vmList->setShowGrid(false);
+    tablev_vmList->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tablev_vmList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_0, 100);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_1, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_2, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_3, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_4, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_5, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_6, 200);
+    tablev_vmList->setColumnWidth(ColumnIndex::COLUMN_7, 200);
+    tablev_vmList->horizontalHeader()->setResizeContentsPrecision(QHeaderView::Stretch);
+    tablev_vmList->verticalHeader()->hide();
+}
+
+void VmListDialog::slot_GetVmList(QList<VmData> vmList)
+{
+    this->vmList = vmList;
+    VmListInit();
 }

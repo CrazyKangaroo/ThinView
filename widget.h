@@ -11,6 +11,7 @@
 #include "https.h"
 #include "vmlistdialog.h"
 #include "autosize.h"
+#include "vmlistdialog.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080
@@ -57,7 +58,8 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-
+signals:
+    void SendVmList(QList<VmData> vmList);
 private:
     QLabel * lab_logo;
     QLabel * lab_userName;

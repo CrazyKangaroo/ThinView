@@ -1,4 +1,5 @@
 #include "vmdata.h"
+#include <QObject>
 
 VmData::VmData()
 {

@@ -104,7 +104,7 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 {
                     int nSocket = attributes.value("sockets").toInt();
                     tempVmData->vCpu = nSocket;
-                    //qDebug()<<"strSocket:"<<strSocket;
+                    //qDebug()<<"strSocket:"<<nSocket;
                 }
             }
             else if (strElementName == "os")
@@ -113,27 +113,33 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 if (attributes.hasAttribute("type"))
                 {
                     QString strType = attributes.value("type").toString();
-                    //qDebug()<<"os type:"<<strSocket;
+                    //qDebug()<<"os type:"<<strType;
                     tempVmData->os = strType;
                 }
             }
-            else if (strElementName == "state")
+            else if (strElementName == "status")
             {
+                reader.readNextStartElement();
                 //qDebug()<<"state:"<<reader.readElementText();
-                QString strState = reader.readElementText();
-                if (strState == "down")
+                QString strElementName = reader.name().toString();
+                if (strElementName == "state")
                 {
-                    tempVmData->state = VmState::DOWN;
-                }
-                else if (strState == "up")
-                {
-                    tempVmData->state = VmState::UP;
+                    QString strState = reader.readElementText();
+                    if (strState == "down")
+                    {
+                        tempVmData->state = VmState::DOWN;
+                    }
+                    else if (strState == "up")
+                    {
+                        tempVmData->state = VmState::UP;
+                    }
                 }
             }
             else if (strElementName == "memory")
             {
                 //qDebug()<<"memory:"<<reader.readElementText();
                 unsigned int memory = reader.readElementText().toUInt();
+                qDebug()<<"memory:"<<memory;
                 tempVmData->memory = memory / (1024 * 1024 * 1024);
             }
             else if (strElementName == "usb")
@@ -153,6 +159,11 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 tempVmData->address = reader.readElementText();
             }
             else if (strElementName == "domain")
+            {
+                reader.readNextStartElement();
+                reader.readNextStartElement();
+            }
+            else if (strElementName == "time_zone")
             {
                 reader.readNextStartElement();
                 reader.readNextStartElement();

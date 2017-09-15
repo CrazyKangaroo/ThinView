@@ -29,5 +29,6 @@
         <file>image/sleep.png</file>
         <file>image/loginout_press.png</file>
         <file>image/loginout_nor.png</file>
+        <file>image/vm_icon.png</file>
     </qresource>
 </RCC>

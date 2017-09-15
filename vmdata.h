@@ -13,12 +13,13 @@ class VmData
 {
 public:
     VmData();
+
     QString id;
     QString name;
     QString os;
     VmState state;
     int vCpu;
-    int memory;
+    unsigned int memory;
     QString address;
     QString usbEnable;
 };
