@@ -5,23 +5,51 @@ Https::Https(QObject *parent) : QObject(parent)
 
 }
 
-void Https::HttpInit(QString url, QString username, QString password)
+void Https::HttpInit(QString serverAddr, int port, QString userName, QString passWord)
 {
+    this->serverAddr = serverAddr;
+    this->port = port;
+
     SslInit();
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(slot_ReplyFinished(QNetworkReply *)));
 
-    QByteArray text((username + ":" + password).toUtf8());
+    QByteArray text((userName + ":" + passWord).toUtf8());
     QNetworkRequest request;
+
+    QString url;
+    url.append(HEAD);
+    url.append(serverAddr);
+    url.append(":");
+    url.append(QString::number(port));
+    url.append(POSTFIX);
+    //qDebug()<<url;
+
     request.setUrl(url);
     request.setSslConfiguration(sslConfig);
     request.setRawHeader("filter", "false");
-    //request.setRawHeader("Prefer", "persistent-auth");
-    //request.setRawHeader("Connection", "close");
     request.setRawHeader("Authorization", "Basic " + text.toBase64());
     manager->get(request);
 }
+
+//void Https::HttpInit(QString url, QString username, QString password)
+//{
+//    SslInit();
+//    manager = new QNetworkAccessManager(this);
+//    connect(manager, SIGNAL(finished(QNetworkReply*)),
+//            this, SLOT(slot_ReplyFinished(QNetworkReply *)));
+
+//    QByteArray text((username + ":" + password).toUtf8());
+//    QNetworkRequest request;
+//    request.setUrl(url);
+//    request.setSslConfiguration(sslConfig);
+//    request.setRawHeader("filter", "false");
+//    //request.setRawHeader("Prefer", "persistent-auth");
+//    //request.setRawHeader("Connection", "close");
+//    request.setRawHeader("Authorization", "Basic " + text.toBase64());
+//    manager->get(request);
+//}
 
 void Https::SslInit()
 {

@@ -6,7 +6,10 @@
 #include <QObject>
 #include "vmdata.h"
 
-#define URL "https://192.168.110.254/ovirt-engine/api/vms"
+#define URL "https://192.168.110.254:443/ovirt-engine/api/vms"
+#define HEAD "https://"
+#define PORT 443
+#define POSTFIX  "/ovirt-engine/api/vms"
 #define USERNAME "admin@internal"
 #define PASSWORD "shencloud"
 
@@ -15,8 +18,11 @@ class Https : public QObject
     Q_OBJECT
 public:
     explicit Https(QObject *parent = 0);
-    void HttpInit(QString url, QString username, QString password);
+    //void HttpInit(QString url, QString username, QString password);
+    void HttpInit(QString serverAddr = 0, int port = 0, QString userName = 0, QString passWord = 0);
 private:
+    QString serverAddr;
+    int port;
     QString xmlText;
     QNetworkAccessManager * manager;
     QSslConfiguration sslConfig;

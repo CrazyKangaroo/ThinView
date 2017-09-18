@@ -37,7 +37,8 @@ SOURCES += \
     vmlistdialog.cpp \
     autosize.cpp \
     customtableview.cpp \
-    loadingdialog.cpp
+    loadingdialog.cpp \
+    ini.cpp
 
 HEADERS += \
         widget.h \
@@ -53,7 +54,8 @@ HEADERS += \
     vmlistdialog.h \
     autosize.h \
     customtableview.h \
-    loadingdialog.h
+    loadingdialog.h \
+    ini.h
 
 FORMS += \
         widget.ui \

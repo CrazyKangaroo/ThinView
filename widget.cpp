@@ -192,9 +192,15 @@ void Widget::onBtnLoginClick()
     QString userName = cbo_userName->currentText();
     QString passWord = lei_passWord->text();
     //https->HttpInit(URL, userName, passWord);
-    https->HttpInit(URL, USERNAME, PASSWORD);
-    loadingDialog = new LoadingDialog;
-    loadingDialog->exec();
+    //https->HttpInit(URL, USERNAME, PASSWORD);
+    QString serverAddr = 0;
+    int port = 0;
+    if (Ini::ReadBasicIni(serverAddr, port))
+    {
+        https->HttpInit(serverAddr, port, USERNAME, PASSWORD);
+        loadingDialog = new LoadingDialog;
+        loadingDialog->exec();
+    }
 }
 
 void Widget::slot_GetVmList(QList<VmData> &vmList)

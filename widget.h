@@ -13,6 +13,8 @@
 #include "autosize.h"
 #include "vmlistdialog.h"
 #include "loadingdialog.h"
+#include <QSettings>
+#include "ini.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080
@@ -48,6 +50,9 @@
 #define LAB_TIME_VERTICAL_OFFSET    30
 
 #define FONT_SIZE   11
+
+
+
 namespace Ui {
 class Widget;
 }
