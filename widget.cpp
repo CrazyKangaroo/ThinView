@@ -189,7 +189,12 @@ void Widget::onBtnLoginClick()
 {
     Https * https = new Https(this);
     connect(https, SIGNAL(SendVmList(QList<VmData> &)), this, SLOT(slot_GetVmList(QList<VmData> &)));
+    QString userName = cbo_userName->currentText();
+    QString passWord = lei_passWord->text();
+    //https->HttpInit(URL, userName, passWord);
     https->HttpInit(URL, USERNAME, PASSWORD);
+    loadingDialog = new LoadingDialog;
+    loadingDialog->exec();
 }
 
 void Widget::slot_GetVmList(QList<VmData> &vmList)
@@ -203,6 +208,9 @@ void Widget::slot_GetVmList(QList<VmData> &vmList)
 //                <<vmList[i].memory<<"#"<<vmList[i].address<<"#" \
 //                <<vmList[i].usbEnable;
 //    }
+
+    loadingDialog->close();
+
     if (vmList.size() > 1)
     {
         VmListDialog * dialog = new VmListDialog;

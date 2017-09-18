@@ -36,7 +36,8 @@ SOURCES += \
     https.cpp \
     vmlistdialog.cpp \
     autosize.cpp \
-    customtableview.cpp
+    customtableview.cpp \
+    loadingdialog.cpp
 
 HEADERS += \
         widget.h \
@@ -51,7 +52,8 @@ HEADERS += \
     https.h \
     vmlistdialog.h \
     autosize.h \
-    customtableview.h
+    customtableview.h \
+    loadingdialog.h
 
 FORMS += \
         widget.ui \
@@ -60,9 +62,12 @@ FORMS += \
     passworderror.ui \
     setting.ui \
     customtab.ui \
-    vmlistdialog.ui
+    vmlistdialog.ui \
+    loadingdialog.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 
 RESOURCES += \
     res.qrc
+
+DISTFILES +=

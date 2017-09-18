@@ -12,6 +12,7 @@
 #include "vmlistdialog.h"
 #include "autosize.h"
 #include "vmlistdialog.h"
+#include "loadingdialog.h"
 
 #define BASE_WIDTH  1920
 #define BASE_HEIGHT  1080
@@ -75,6 +76,7 @@ private:
     QPushButton * btn_shutDown;
     //Https https;
     QTimer * timer;
+    LoadingDialog * loadingDialog;
     Ui::Widget *ui;
     void UIInit();
     void TimerInit();
