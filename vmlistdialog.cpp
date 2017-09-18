@@ -219,7 +219,7 @@ void VmListDialog::TabViewInit()
     tablev_vmList->verticalHeader()->hide();
 }
 
-void VmListDialog::slot_GetVmList(QList<VmData> vmList)
+void VmListDialog::slot_GetVmList(QList<VmData> &vmList)
 {
     this->vmList = vmList;
     VmListInit();

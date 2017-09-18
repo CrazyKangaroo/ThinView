@@ -59,7 +59,7 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 signals:
-    void SendVmList(QList<VmData> vmList);
+    void SendVmList(QList<VmData> & vmList);
 private:
     QLabel * lab_logo;
     QLabel * lab_userName;
@@ -73,7 +73,7 @@ private:
     QPushButton * btn_detail;
     QPushButton * btn_setting;
     QPushButton * btn_shutDown;
-    Https https;
+    //Https https;
     QTimer * timer;
     Ui::Widget *ui;
     void UIInit();
@@ -82,7 +82,7 @@ public slots:
     void slot_UpdateTime();
     void slot_BtnSettingClick();
     void onBtnLoginClick();
-    void slot_GetVmList(QList<VmData> vmList);
+    void slot_GetVmList(QList<VmData> & vmList);
 };
 
 #endif // WIDGET_H

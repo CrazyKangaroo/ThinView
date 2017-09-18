@@ -23,7 +23,7 @@ private:
     QList<VmData> vmList;
     void SslInit();
 signals:
-    void SendVmList(QList<VmData>);
+    void SendVmList(QList<VmData> &);
 public slots:
     void slot_ReplyFinished(QNetworkReply * reply);
 };

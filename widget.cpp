@@ -187,11 +187,12 @@ void Widget::TimerInit()
 
 void Widget::onBtnLoginClick()
 {
-    connect(&https, SIGNAL(SendVmList(QList<VmData>)), this, SLOT(slot_GetVmList(QList<VmData>)));
-    https.HttpInit(URL, USERNAME, PASSWORD);
+    Https * https = new Https(this);
+    connect(https, SIGNAL(SendVmList(QList<VmData> &)), this, SLOT(slot_GetVmList(QList<VmData> &)));
+    https->HttpInit(URL, USERNAME, PASSWORD);
 }
 
-void Widget::slot_GetVmList(QList<VmData> vmList)
+void Widget::slot_GetVmList(QList<VmData> &vmList)
 {
 
 //    qDebug()<<vmList.size();
@@ -205,7 +206,7 @@ void Widget::slot_GetVmList(QList<VmData> vmList)
     if (vmList.size() > 1)
     {
         VmListDialog * dialog = new VmListDialog;
-        connect(this, SIGNAL(SendVmList(QList<VmData>)), dialog, SLOT(slot_GetVmList(QList<VmData>)));
+        connect(this, SIGNAL(SendVmList(QList<VmData> &)), dialog, SLOT(slot_GetVmList(QList<VmData> &)));
         emit SendVmList(vmList);
         dialog->show();
     }

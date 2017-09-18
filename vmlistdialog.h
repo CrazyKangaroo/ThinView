@@ -111,7 +111,7 @@ private:
     void TabViewModelInit();
     void TabViewInit();
 public slots:
-    void slot_GetVmList(QList<VmData> vmList);
+    void slot_GetVmList(QList<VmData> & vmList);
 };
 
 #endif // VMLISTDIALOG_H
