@@ -178,11 +178,26 @@ void VmListDialog::TabViewModelInit()
         //QStandardItem * item = new QStandardItem;
         model->setItem(i, COLUMN_1, new QStandardItem(vmList[i].name));
         model->setItem(i, COLUMN_2, new QStandardItem(vmList[i].os));
-        model->setItem(i, COLUMN_3, new QStandardItem(vmList[i].state));
+        if (vmList[i].state == VmData::VmState::DOWN)
+        {
+            model->setItem(i, COLUMN_3, new QStandardItem(tr("Down")));
+        }
+        else if (vmList[i].state == VmData::VmState::UP)
+        {
+            model->setItem(i, COLUMN_3, new QStandardItem(tr("Up")));
+        }
         model->setItem(i, COLUMN_4, new QStandardItem(QString::number(vmList[i].vCpu)));
         model->setItem(i, COLUMN_5, new QStandardItem(QString::number(vmList[i].memory) + "GB"));
         model->setItem(i, COLUMN_6, new QStandardItem(vmList[i].address));
-        model->setItem(i, COLUMN_7, new QStandardItem(vmList[i].usbEnable));
+        if (vmList[i].usbEnable == VmData::UsbPolicy::Enable)
+        {
+            model->setItem(i, COLUMN_7, new QStandardItem(tr("Enable")));
+        }
+        else
+        {
+            model->setItem(i, COLUMN_7, new QStandardItem(tr("Disable")));
+        }
+        //model->setItem(i, COLUMN_7, new QStandardItem(vmList[i].usbEnable));
     }
 }
 

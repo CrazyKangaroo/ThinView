@@ -10,5 +10,5 @@ VmData::VmData()
     vCpu = 0;
     memory = 0;
     address = "";
-    usbEnable = UsbPolicy::Disable;
+    usbEnable = "";
 }

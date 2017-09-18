@@ -100,10 +100,10 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
             else if (strElementName == "topology")
             {
                 QXmlStreamAttributes attributes = reader.attributes();
-                if (attributes.hasAttribute("sockets"))
+                if (attributes.hasAttribute("cores"))
                 {
-                    int nSocket = attributes.value("sockets").toInt();
-                    tempVmData->vCpu = nSocket;
+                    int nCores = attributes.value("cores").toInt();
+                    tempVmData->vCpu = nCores;
                     //qDebug()<<"strSocket:"<<nSocket;
                 }
             }
@@ -127,19 +127,19 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                     QString strState = reader.readElementText();
                     if (strState == "down")
                     {
-                        tempVmData->state = VmState::DOWN;
+                        tempVmData->state = VmData::VmState::DOWN;
                     }
                     else if (strState == "up")
                     {
-                        tempVmData->state = VmState::UP;
+                        tempVmData->state = VmData::VmState::UP;
                     }
                 }
             }
             else if (strElementName == "memory")
             {
-                //qDebug()<<"memory:"<<reader.readElementText();
-                unsigned int memory = reader.readElementText().toUInt();
-                qDebug()<<"memory:"<<memory;
+                //qDebug()<<"memory:"<<reader.readElementText().toLong();
+                long memory = reader.readElementText().toLong();
+                //qDebug()<<"memory:"<<memory;
                 tempVmData->memory = memory / (1024 * 1024 * 1024);
             }
             else if (strElementName == "usb")
@@ -149,7 +149,15 @@ void XML::ParseStartElement(QXmlStreamReader &reader, QList<VmData> &vmList)
                 if (strElementName == "enabled")
                 {
                     //qDebug()<<"usb enabled:"<<reader.readElementText();
-                    tempVmData->usbEnable = reader.readElementText();
+                    QString strElementName = reader.readElementText();
+                    if (strElementName == "true")
+                    {
+                        tempVmData->usbEnable = VmData::UsbPolicy::Enable;
+                    }
+                    else
+                    {
+                        tempVmData->usbEnable = VmData::UsbPolicy::Disable;
+                    }
                     vmList.append(*tempVmData);
                 }
             }

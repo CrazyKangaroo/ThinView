@@ -194,14 +194,14 @@ void Widget::onBtnLoginClick()
 void Widget::slot_GetVmList(QList<VmData> vmList)
 {
 
-    qDebug()<<vmList.size();
-    for (int i = 0; i < vmList.size(); i++)
-    {
-        qDebug()<<vmList[i].name<<"#"<<vmList[i].os<<"#" \
-                <<vmList[i].state<<"#"<<vmList[i].vCpu<<"#" \
-                <<vmList[i].memory<<"#"<<vmList[i].address<<"#" \
-                <<vmList[i].usbEnable;
-    }
+//    qDebug()<<vmList.size();
+//    for (int i = 0; i < vmList.size(); i++)
+//    {
+//        qDebug()<<vmList[i].name<<"#"<<vmList[i].os<<"#" \
+//                <<vmList[i].state<<"#"<<vmList[i].vCpu<<"#" \
+//                <<vmList[i].memory<<"#"<<vmList[i].address<<"#" \
+//                <<vmList[i].usbEnable;
+//    }
     if (vmList.size() > 1)
     {
         VmListDialog * dialog = new VmListDialog;

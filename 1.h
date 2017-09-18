@@ -3,22 +3,17 @@
 
 #include <QString>
 
-
+enum VmState
+{
+    DOWN = 0,
+    UP,
+};
 
 class VmData
 {
 public:
     VmData();
-    enum VmState
-    {
-        DOWN = 0,
-        UP,
-    };
-    enum UsbPolicy
-    {
-        Enable = 0,
-        Disable,
-    };
+
     QString id;
     QString name;
     QString os;
@@ -26,7 +21,7 @@ public:
     int vCpu;
     unsigned int memory;
     QString address;
-    UsbPolicy usbEnable;
+    QString usbEnable;
 };
 
 #endif // VMDATA_H
