@@ -30,8 +30,8 @@ public:
 private:
     Ui::CustomTab *ui;
     void UIIint();
-    QString serverAddr = "";
-    int port = 0;
+    QString serverAddr;
+    int port;
     QProcess * processResolution;
     QList<int> resolutionList;
     QProcess * processSystem;

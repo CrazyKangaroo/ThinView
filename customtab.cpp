@@ -36,6 +36,10 @@ void CustomTab::UIIint()
     ui->lab_port->setText(tr("port"));
     ui->cco_auto->setText(tr("Auto adjust resolution"));
     ui->cco_manual->setText(tr("Manual adjust resolution"));
+    ui->cco_auto->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtnset_nor.png);}"
+                                 "QCheckBox::indicator:checked{image:url(:/image/checkbtnset_press.png);}");
+    ui->cco_manual->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtnset_nor.png);}"
+                                  "QCheckBox::indicator:checked{image:url(:/image/checkbtnset_press.png);}");
     ui->btn_basic_save->setText(tr("Save"));
 
     ui->rbn_dhcp->setText(tr("Automatic access using DHCP"));

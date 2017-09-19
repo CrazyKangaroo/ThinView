@@ -12,6 +12,9 @@ bool Ini::WriteBasicIni()
 
 bool Ini::ReadBasicIni(QString & serverAddr, int  & port)
 {
+    serverAddr = QString::null;
+    port = 0;
+
     try
     {
         QSettings settings(BASIC_INT_PATH, QSettings::IniFormat);

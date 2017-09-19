@@ -31,5 +31,7 @@
         <file>image/loginout_nor.png</file>
         <file>image/vm_icon.png</file>
         <file>image/loading.gif</file>
+        <file>image/checkbtnset_press.png</file>
+        <file>image/checkbtnset_nor.png</file>
     </qresource>
 </RCC>
