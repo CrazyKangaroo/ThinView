@@ -7,6 +7,7 @@ LoadingDialog::LoadingDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setAttribute(Qt::WA_DeleteOnClose);
     this->setWindowFlags(Qt::FramelessWindowHint);
     QMovie * movie = new QMovie(":/image/loading.gif");
     ui->label->setMovie(movie);

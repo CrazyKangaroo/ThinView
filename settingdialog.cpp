@@ -45,9 +45,11 @@ void SettingDialog::UIInit()
 void SettingDialog::onBtn_OKClick()
 {
     QString password = ui->lei_password->text();
-    if (password == "1")
+    this->close();
+    if (password == PASSWORK)
     {
         Setting * pDialog = new Setting;
+
         int result = pDialog->exec();
 
         if (result == QDialog::Accepted)

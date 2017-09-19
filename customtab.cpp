@@ -9,6 +9,14 @@ CustomTab::CustomTab(QWidget *parent) :
     ui->setupUi(this);
 
     UIIint();
+    Ini::ReadBasicIni(serverAddr, port);
+    ui->lei_serverAddr->setText(serverAddr);
+    ui->lei_port->setText(QString::number(port));
+    processSystem = new QProcess(this);
+    connect(processSystem, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_ReadSystem()));
+    QStringList arguments;
+    arguments.append("-a");
+    processSystem->start("uname", arguments, QIODevice::ReadOnly);
 }
 
 CustomTab::~CustomTab()
@@ -46,4 +54,60 @@ void CustomTab::UIIint()
 
     ui->lab_AppName->setText(tr("Terminal login software"));
     ui->lab_version->setText(tr("Version : "));
+}
+
+void CustomTab::slot_ReadSystemResolution()
+{
+    QByteArray text = processResolution->readAllStandardOutput();
+    processResolution->close();
+    QTextStream in(&text);
+    bool result = in.seek(153);
+
+    if (result == true)
+    {
+        while (!in.atEnd())
+        {
+          int x, y;
+          char ch;
+          in>>x>>ch>>y;
+          in.readLine();
+          if (ch == 'x')
+          {
+              resolutionList.append(x);
+              resolutionList.append(y);
+          }
+        }
+//        qDebug()<<resolutionList.size();
+//        for (int i = 0; i < resolutionList.size(); i++)
+//        {
+//            qDebug()<<resolutionList[i];
+//        }
+
+        for (int i = 0; i < resolutionList.size(); i+=2)
+        {
+            QString strResolution(QString::number(resolutionList[i])+"x"+QString::number(resolutionList[i + 1]));
+            ui->cbo_resolution->addItem(strResolution);
+        }
+    }
+}
+
+void CustomTab::slot_ReadSystem()
+{
+    QByteArray text = processSystem->readAllStandardOutput();
+    processSystem->close();
+    //qDebug()<<text;
+
+    if (text.indexOf("x86") >= 0)
+    {
+        processResolution = new QProcess(this);
+        connect(processResolution, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_ReadSystemResolution()));
+        processResolution->start("xrandr", QIODevice::ReadOnly);
+    }
+    else
+    {
+        for (int i = 0; i < sizeof(resolutionArray) / sizeof(resolutionArray[0]); i++)
+        {
+            ui->cbo_resolution->addItem(resolutionArray[i]);
+        }
+    }
 }

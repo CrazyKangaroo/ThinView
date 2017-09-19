@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "titlebar.h"
 
+#define PASSWORK    "1"
+
 namespace Ui {
 class SettingDialog;
 }

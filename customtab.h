@@ -2,6 +2,11 @@
 #define CUSTOMTAB_H
 
 #include <QWidget>
+#include "ini.h"
+#include <QProcess>
+#include <QDebug>
+#include <QTextStream>
+#include <QList>
 
 enum PageIndex
 {
@@ -25,6 +30,15 @@ public:
 private:
     Ui::CustomTab *ui;
     void UIIint();
+    QString serverAddr = "";
+    int port = 0;
+    QProcess * processResolution;
+    QList<int> resolutionList;
+    QProcess * processSystem;
+    QString resolutionArray[5] = {"1920x1080", "1440x900", "1024x768", "1280x1024", "1280x720"};
+public slots:
+    void slot_ReadSystemResolution();
+    void slot_ReadSystem();
 };
 
 #endif // CUSTOMTAB_H
