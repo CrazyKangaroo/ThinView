@@ -32,6 +32,8 @@ private:
     void UIIint();
     QString serverAddr;
     int port;
+    bool autoEnable;
+    int resolutionIndex;
     QProcess * processResolution;
     QList<int> resolutionList;
     QProcess * processSystem;

@@ -8,8 +8,8 @@ CustomTab::CustomTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    Ini::ReadBasicIni(serverAddr, port, autoEnable, resolutionIndex);
     UIIint();
-    Ini::ReadBasicIni(serverAddr, port);
     ui->lei_serverAddr->setText(serverAddr);
     ui->lei_port->setText(QString::number(port));
     processSystem = new QProcess(this);
@@ -60,6 +60,15 @@ void CustomTab::UIIint()
 
     ui->lab_AppName->setText(tr("Terminal login software"));
     ui->lab_version->setText(tr("Version : "));
+
+    if (autoEnable == true)
+    {
+        ui->cco_auto->setChecked(true);
+    }
+    else
+    {
+        ui->cco_manual->setChecked(true);
+    }
 }
 
 void CustomTab::slot_ReadSystemResolution()
@@ -94,6 +103,7 @@ void CustomTab::slot_ReadSystemResolution()
             QString strResolution(QString::number(resolutionList[i])+"x"+QString::number(resolutionList[i + 1]));
             ui->cbo_resolution->addItem(strResolution);
         }
+        ui->cbo_resolution->setCurrentIndex(resolutionIndex);
     }
 }
 
@@ -115,7 +125,10 @@ void CustomTab::slot_ReadSystem()
         {
             ui->cbo_resolution->addItem(resolutionArray[i]);
         }
+        ui->cbo_resolution->setCurrentIndex(resolutionIndex);
     }
+
+
 }
 
 void CustomTab::onCheckBoxAutoClick()
