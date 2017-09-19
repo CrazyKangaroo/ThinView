@@ -36,6 +36,8 @@ void CustomTab::UIIint()
     ui->lab_port->setText(tr("port"));
     ui->cco_auto->setText(tr("Auto adjust resolution"));
     ui->cco_manual->setText(tr("Manual adjust resolution"));
+    connect(ui->cco_auto, SIGNAL(clicked(bool)), this, SLOT(onCheckBoxAutoClick()));
+    connect(ui->cco_manual, SIGNAL(clicked(bool)), this, SLOT(onCheckBoxManualClick()));
     ui->cco_auto->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtnset_nor.png);}"
                                  "QCheckBox::indicator:checked{image:url(:/image/checkbtnset_press.png);}");
     ui->cco_manual->setStyleSheet("QCheckBox::indicator:unchecked{image:url(:/image/checkbtnset_nor.png);}"
@@ -113,5 +115,23 @@ void CustomTab::slot_ReadSystem()
         {
             ui->cbo_resolution->addItem(resolutionArray[i]);
         }
+    }
+}
+
+void CustomTab::onCheckBoxAutoClick()
+{
+    if (ui->cco_auto->isChecked())
+    {
+        ui->cco_manual->setChecked(false);
+        ui->cbo_resolution->setDisabled(true);
+    }
+}
+
+void CustomTab::onCheckBoxManualClick()
+{
+    if (ui->cco_manual->isChecked())
+    {
+        ui->cco_auto->setChecked(false);
+        ui->cbo_resolution->setDisabled(false);
     }
 }

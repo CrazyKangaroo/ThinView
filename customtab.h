@@ -39,6 +39,8 @@ private:
 public slots:
     void slot_ReadSystemResolution();
     void slot_ReadSystem();
+    void onCheckBoxAutoClick();
+    void onCheckBoxManualClick();
 };
 
 #endif // CUSTOMTAB_H
