@@ -76,7 +76,51 @@ void CustomTab::UIIint()
         ui->cbo_resolution->setDisabled(false);
     }
 
+    buttonGroupIP = new QButtonGroup(this);
+    buttonGroupIP->addButton(ui->rbn_dhcp);
+    buttonGroupIP->addButton(ui->rbn_staticIP);
+    buttonGroupDNS = new QButtonGroup(this);
+    buttonGroupDNS->addButton(ui->rbn_autoDNS);
+    buttonGroupDNS->addButton(ui->rbn_manualDNS);
 
+    connect(ui->rbn_dhcp, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonDhcpClick()));
+    connect(ui->rbn_staticIP, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonStaticIPClick()));
+    connect(ui->rbn_autoDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonAutoDNSClick()));
+    connect(ui->rbn_manualDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonManualDNSClick()));
+}
+
+void CustomTab::onRadioButtonDhcpClick()
+{
+    ui->lei_ipAddr->setDisabled(true);
+    ui->lei_subnetMask->setDisabled(true);
+    ui->lei_gateway->setDisabled(true);
+    ui->rbn_autoDNS->setDisabled(false);
+}
+
+void CustomTab::onRadioButtonStaticIPClick()
+{
+    ui->rbn_autoDNS->setDisabled(true);
+    ui->lei_ipAddr->setDisabled(false);
+    ui->lei_subnetMask->setDisabled(false);
+    ui->lei_gateway->setDisabled(false);
+    ui->rbn_manualDNS->setChecked(true);
+    ui->lei_dnsAddr1->setDisabled(false);
+    ui->lei_dnsAddr2->setDisabled(false);
+    ui->lei_dnsAddr3->setDisabled(false);
+}
+
+void CustomTab::onRadioButtonAutoDNSClick()
+{
+    ui->lei_dnsAddr1->setDisabled(true);
+    ui->lei_dnsAddr2->setDisabled(true);
+    ui->lei_dnsAddr3->setDisabled(true);
+}
+
+void CustomTab::onRadioButtonManualDNSClick()
+{
+    ui->lei_dnsAddr1->setDisabled(false);
+    ui->lei_dnsAddr2->setDisabled(false);
+    ui->lei_dnsAddr3->setDisabled(false);
 }
 
 void CustomTab::slot_ReadSystemResolution()

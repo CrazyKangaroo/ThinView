@@ -11,6 +11,7 @@
 #include "dialog.h"
 #include "loadingdialog.h"
 #include "threadloading.h"
+#include <QButtonGroup>
 
 enum PageIndex
 {
@@ -43,6 +44,8 @@ private:
     QProcess * processSystem;
     LoadingDialog * loadingDialog;
     ThreadLoading threadLoading;
+    QButtonGroup * buttonGroupIP;
+    QButtonGroup * buttonGroupDNS;
     QString resolutionArray[5] = {"1920x1080", "1440x900", "1024x768", "1280x1024", "1280x720"};
     void SetResolutionIndex();
 public slots:
@@ -52,6 +55,10 @@ public slots:
     void onCheckBoxManualClick();
     void onBtnBasicSaveClick();
     void slot_WriteBasicIniFinish();
+    void onRadioButtonDhcpClick();
+    void onRadioButtonStaticIPClick();
+    void onRadioButtonAutoDNSClick();
+    void onRadioButtonManualDNSClick();
 signals:
     void CloseWindow();
 };
