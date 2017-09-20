@@ -19,7 +19,51 @@ CustomTab::CustomTab(QWidget *parent) :
     arguments.append("-a");
     processSystem->start("uname", arguments, QIODevice::ReadOnly);
 
+//    processNetwork = new QProcess(this);
+//    processNetwork->start("sudo ./netget.sh");
+    system("chmod +x netget.sh");
+    system("sudo ./netget.sh");
+    IPaddr = QString::null;
+    subnetMask = QString::null;
+    gateway = QString::null;
+    DNS1 = QString::null;
+    DNS2 = QString::null;
+    DNS3 = QString::null;
 
+    QFile file("nettmp.txt");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        IPaddr = file.readLine();
+        subnetMask = file.readLine();
+        gateway = file.readLine();
+        DNS1 = file.readLine();
+        DNS2 = file.readLine();
+        DNS3 = file.readLine();
+
+        file.close();
+        system("rm -rf nettmp.txt");
+    }
+
+    system("sudo cat /etc/network/interfaces > net_tmp.txt");
+    QFile file2("net_tmp.txt");
+    if (file2.open(QIODevice::ReadOnly))
+    {
+        QByteArray text = file2.readAll();
+        if (text.indexOf("dhcp") >= 0)
+        {
+            DhcpInit();
+        }
+        else if (text.indexOf("static") >= 0)
+        {
+            StaticIPInit();
+            ui->lei_ipAddr->setText(IPaddr);
+            ui->lei_subnetMask->setText(subnetMask);
+            ui->lei_gateway->setText(gateway);
+        }
+
+        file2.close();
+        system("rm -rf net_tmp.txt");
+    }
 }
 
 CustomTab::~CustomTab()
@@ -87,6 +131,31 @@ void CustomTab::UIIint()
     connect(ui->rbn_staticIP, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonStaticIPClick()));
     connect(ui->rbn_autoDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonAutoDNSClick()));
     connect(ui->rbn_manualDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonManualDNSClick()));
+}
+
+void CustomTab::DhcpInit()
+{
+    ui->rbn_dhcp->setChecked(true);
+    ui->rbn_autoDNS->setChecked(true);
+    ui->lei_dnsAddr1->setDisabled(true);
+    ui->lei_dnsAddr2->setDisabled(true);
+    ui->lei_dnsAddr3->setDisabled(true);
+    ui->lei_ipAddr->setDisabled(true);
+    ui->lei_subnetMask->setDisabled(true);
+    ui->lei_gateway->setDisabled(true);
+    ui->rbn_autoDNS->setDisabled(false);
+}
+
+void CustomTab::StaticIPInit()
+{
+    ui->rbn_staticIP->setChecked(true);
+    ui->rbn_autoDNS->setChecked(true);
+    ui->lei_ipAddr->setDisabled(false);
+    ui->lei_subnetMask->setDisabled(false);
+    ui->lei_gateway->setDisabled(false);
+    ui->lei_dnsAddr1->setDisabled(true);
+    ui->lei_dnsAddr2->setDisabled(true);
+    ui->lei_dnsAddr3->setDisabled(true);
 }
 
 void CustomTab::onRadioButtonDhcpClick()

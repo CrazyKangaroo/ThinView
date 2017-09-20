@@ -12,6 +12,7 @@
 #include "loadingdialog.h"
 #include "threadloading.h"
 #include <QButtonGroup>
+#include <QFile>
 
 enum PageIndex
 {
@@ -42,12 +43,21 @@ private:
     QProcess * processResolution;
     QList<QString> resolutionList;
     QProcess * processSystem;
+    QProcess * processNetwork;
     LoadingDialog * loadingDialog;
     ThreadLoading threadLoading;
     QButtonGroup * buttonGroupIP;
     QButtonGroup * buttonGroupDNS;
+    QString IPaddr;
+    QString subnetMask;
+    QString gateway;
+    QString DNS1;
+    QString DNS2;
+    QString DNS3;
     QString resolutionArray[5] = {"1920x1080", "1440x900", "1024x768", "1280x1024", "1280x720"};
     void SetResolutionIndex();
+    void StaticIPInit();
+    void DhcpInit();
 public slots:
     void slot_ReadSystemResolution();
     void slot_ReadSystem();
