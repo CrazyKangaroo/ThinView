@@ -39,4 +39,11 @@ void Setting::UIInit()
     pLayout->setContentsMargins(0, 0, 0, 0);
     pLayout->addWidget(pCustomTab);
     setLayout(pLayout);
+
+    connect(pCustomTab, SIGNAL(CloseWindow()), this, SLOT(slot_CloseWindow()));
+}
+
+void Setting::slot_CloseWindow()
+{
+    this->close();
 }

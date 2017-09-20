@@ -90,6 +90,7 @@ public slots:
     void slot_BtnSettingClick();
     void onBtnLoginClick();
     void slot_GetVmList(QList<VmData> & vmList);
+    void onBtnShutDownClick();
 };
 
 #endif // WIDGET_H

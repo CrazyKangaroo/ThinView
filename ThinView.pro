@@ -38,7 +38,9 @@ SOURCES += \
     autosize.cpp \
     customtableview.cpp \
     loadingdialog.cpp \
-    ini.cpp
+    dialog.cpp \
+    ini.cpp \
+    threadloading.cpp
 
 HEADERS += \
         widget.h \
@@ -55,7 +57,9 @@ HEADERS += \
     autosize.h \
     customtableview.h \
     loadingdialog.h \
-    ini.h
+    dialog.h \
+    ini.h \
+    threadloading.h
 
 FORMS += \
         widget.ui \
@@ -65,7 +69,8 @@ FORMS += \
     setting.ui \
     customtab.ui \
     vmlistdialog.ui \
-    loadingdialog.ui
+    loadingdialog.ui \
+    dialog.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

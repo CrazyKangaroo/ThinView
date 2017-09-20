@@ -23,6 +23,8 @@ public:
 private:
     Ui::Setting *ui;
     void UIInit();
+public slots:
+    void slot_CloseWindow();
 };
 
 #endif // SETTING_H

@@ -150,6 +150,7 @@ void Widget::UIInit()
                                 );
     btn_shutDown->move(BASE_WIDTH - MAIN_BTN_SHUTDOWN_HORIZONTAL_OFFSET, BASE_HEIGHT - MAIN_BTN_SHUTDOWN_VERTICAL_OFFSET);
     AutoSize::AutoChangeSize(btn_shutDown, this->width(), this->height(), BASE_WIDTH, BASE_HEIGHT);
+    connect(btn_shutDown, SIGNAL(clicked(bool)), this, SLOT(onBtnShutDownClick()));
 
     //VmListDialog * dialog = new VmListDialog;
     //dialog->show();
@@ -195,7 +196,8 @@ void Widget::onBtnLoginClick()
     //https->HttpInit(URL, USERNAME, PASSWORD);
     QString serverAddr = 0;
     int port = 0;
-    if (Ini::ReadBasicIni(serverAddr, port))
+    Ini ini;
+    if (ini.ReadBasicIni(serverAddr, port))
     {
         https->HttpInit(serverAddr, port, USERNAME, PASSWORD);
         loadingDialog = new LoadingDialog;
@@ -224,4 +226,9 @@ void Widget::slot_GetVmList(QList<VmData> &vmList)
         emit SendVmList(vmList);
         dialog->show();
     }
+}
+
+void Widget::onBtnShutDownClick()
+{
+    QCoreApplication::exit();
 }

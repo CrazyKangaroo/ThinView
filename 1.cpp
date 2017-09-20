@@ -1,11 +1,11 @@
 #include "ini.h"
 
-Ini::Ini(QObject *parent) : QObject(parent)
+Ini::Ini()
 {
 
 }
 
-bool Ini::WriteBasicIni(QString serverAddr, int port, bool autoEnable)
+bool Ini::WriteBasicIni(QString serverAddr, int port, bool autoEnable, int resolutionIndex)
 {
     try
     {
@@ -14,8 +14,8 @@ bool Ini::WriteBasicIni(QString serverAddr, int port, bool autoEnable)
         settings.setValue(BASIC_SERVER_ADDRESS, serverAddr);
         settings.setValue(BASIC_PORT, port);
         settings.setValue(BASIC_AUTO_ENABLE, autoEnable);
-        //settings.setValue(BASIC_RESOLUTION_INDEX, resolutionIndex);
-        emit WriteBasicIniFinish();
+        settings.setValue(BASIC_RESOLUTION_INDEX, resolutionIndex);
+
         return true;
     }
     catch (...)
@@ -46,12 +46,12 @@ bool Ini::ReadBasicIni(QString & serverAddr, int  & port)
     }
 }
 
-bool Ini::ReadBasicIni(QString & serverAddr, int  & port, bool & autoEnable)
+bool Ini::ReadBasicIni(QString & serverAddr, int  & port, bool & autoEnable, int & resolutionIndex)
 {
     serverAddr = QString::null;
     port = 0;
     autoEnable = false;
-    //resolutionIndex = 0;
+    resolutionIndex = 0;
 
     try
     {
@@ -60,7 +60,7 @@ bool Ini::ReadBasicIni(QString & serverAddr, int  & port, bool & autoEnable)
         serverAddr = settings.value(BASIC_SERVER_ADDRESS).toString();
         port = settings.value(BASIC_PORT).toInt();
         autoEnable = settings.value(BASIC_AUTO_ENABLE).toBool();
-        //resolutionIndex = settings.value(BASIC_RESOLUTION_INDEX).toInt();
+        resolutionIndex = settings.value(BASIC_RESOLUTION_INDEX).toInt();
         //qDebug()<<serverAddr<<port<<autoEnable<<resolutionIndex;
 
         return true;
@@ -70,4 +70,3 @@ bool Ini::ReadBasicIni(QString & serverAddr, int  & port, bool & autoEnable)
         return false;
     }
 }
-

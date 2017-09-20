@@ -7,6 +7,10 @@
 #include <QDebug>
 #include <QTextStream>
 #include <QList>
+#include <QDesktopWidget>
+#include "dialog.h"
+#include "loadingdialog.h"
+#include "threadloading.h"
 
 enum PageIndex
 {
@@ -35,14 +39,21 @@ private:
     bool autoEnable;
     int resolutionIndex;
     QProcess * processResolution;
-    QList<int> resolutionList;
+    QList<QString> resolutionList;
     QProcess * processSystem;
+    LoadingDialog * loadingDialog;
+    ThreadLoading threadLoading;
     QString resolutionArray[5] = {"1920x1080", "1440x900", "1024x768", "1280x1024", "1280x720"};
+    void SetResolutionIndex();
 public slots:
     void slot_ReadSystemResolution();
     void slot_ReadSystem();
     void onCheckBoxAutoClick();
     void onCheckBoxManualClick();
+    void onBtnBasicSaveClick();
+    void slot_WriteBasicIniFinish();
+signals:
+    void CloseWindow();
 };
 
 #endif // CUSTOMTAB_H
