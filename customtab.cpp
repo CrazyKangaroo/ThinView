@@ -34,12 +34,18 @@ CustomTab::CustomTab(QWidget *parent) :
         IPaddr = file.readLine();
         subnetMask = file.readLine();
         gateway = file.readLine();
-        DNS1 = file.readLine();
-        DNS2 = file.readLine();
-        DNS3 = file.readLine();
+        //DNS1 = file.readLine();
+        //DNS2 = file.readLine();
+        //DNS3 = file.readLine();
 
         file.close();
         system("rm -rf nettmp.txt");
+
+        IPaddr.replace(QString("\n"), QString(""));
+        subnetMask .replace(QString("\n"), QString(""));
+        gateway.replace(QString("\n"), QString(""));
+
+
     }
 
     system("sudo cat /etc/network/interfaces > net_tmp.txt");
@@ -61,6 +67,34 @@ CustomTab::CustomTab(QWidget *parent) :
 
         file2.close();
         system("rm -rf net_tmp.txt");
+    }
+
+    QFile file3("/etc/resolvconf/resolv.conf.d/tail");
+    if (file3.open(QIODevice::ReadOnly))
+    {
+        ManualDNSInit();
+        bool result = file3.seek(11);
+        if (result == true)
+        {
+            DNS1 = file3.readLine();
+            file3.seek(file3.pos() + 11);
+            DNS2 = file3.readLine();
+            file3.seek(file3.pos() + 11);
+            DNS3 = file3.readLine();
+
+            DNS1.replace(QString("\n"), QString(""));
+            DNS2.replace(QString("\n"), QString(""));
+            DNS3.replace(QString("\n"), QString(""));
+
+            ui->lei_dnsAddr1->setText(DNS1);
+            ui->lei_dnsAddr2->setText(DNS2);
+            ui->lei_dnsAddr3->setText(DNS3);
+            //qDebug()<<DNS1<<DNS2<<DNS3;
+        }
+    }
+    else
+    {
+        AutoDNSInit();
     }
 }
 
@@ -133,13 +167,25 @@ void CustomTab::UIIint()
     connect(ui->btn_network_save, SIGNAL(clicked(bool)), this, SLOT(onBtnNetworkSaveClick()));
 }
 
-void CustomTab::DhcpInit()
+void CustomTab::AutoDNSInit()
 {
-    ui->rbn_dhcp->setChecked(true);
     ui->rbn_autoDNS->setChecked(true);
     ui->lei_dnsAddr1->setDisabled(true);
     ui->lei_dnsAddr2->setDisabled(true);
     ui->lei_dnsAddr3->setDisabled(true);
+}
+
+void CustomTab::ManualDNSInit()
+{
+    ui->rbn_manualDNS->setChecked(true);
+    ui->lei_dnsAddr1->setDisabled(false);
+    ui->lei_dnsAddr2->setDisabled(false);
+    ui->lei_dnsAddr3->setDisabled(false);
+}
+
+void CustomTab::DhcpInit()
+{
+    ui->rbn_dhcp->setChecked(true);
     ui->lei_ipAddr->setDisabled(true);
     ui->lei_subnetMask->setDisabled(true);
     ui->lei_gateway->setDisabled(true);
@@ -149,13 +195,9 @@ void CustomTab::DhcpInit()
 void CustomTab::StaticIPInit()
 {
     ui->rbn_staticIP->setChecked(true);
-    ui->rbn_autoDNS->setChecked(true);
     ui->lei_ipAddr->setDisabled(false);
     ui->lei_subnetMask->setDisabled(false);
     ui->lei_gateway->setDisabled(false);
-    ui->lei_dnsAddr1->setDisabled(true);
-    ui->lei_dnsAddr2->setDisabled(true);
-    ui->lei_dnsAddr3->setDisabled(true);
 }
 
 void CustomTab::onRadioButtonDhcpClick()
@@ -164,6 +206,10 @@ void CustomTab::onRadioButtonDhcpClick()
     ui->lei_subnetMask->setDisabled(true);
     ui->lei_gateway->setDisabled(true);
     ui->rbn_autoDNS->setDisabled(false);
+
+    ui->lei_ipAddr->clear();
+    ui->lei_subnetMask->clear();
+    ui->lei_gateway->clear();
 }
 
 void CustomTab::onRadioButtonStaticIPClick()
@@ -183,6 +229,10 @@ void CustomTab::onRadioButtonAutoDNSClick()
     ui->lei_dnsAddr1->setDisabled(true);
     ui->lei_dnsAddr2->setDisabled(true);
     ui->lei_dnsAddr3->setDisabled(true);
+
+    ui->lei_dnsAddr1->clear();
+    ui->lei_dnsAddr2->clear();
+    ui->lei_dnsAddr3->clear();
 }
 
 void CustomTab::onRadioButtonManualDNSClick()
@@ -255,17 +305,44 @@ void CustomTab::onBtnNetworkSaveClick()
     }
     else
     {
-        if ((ui->lei_ipAddr->text() == "") &&
-            (ui->lei_ipAddr->text() == "") &&
-            (ui->lei_gateway->text() == ""))
+//        if ((ui->lei_ipAddr->text() == "") &&
+//            (ui->lei_ipAddr->text() == "") &&
+//            (ui->lei_gateway->text() == ""))
+//        {
+
+//        }
+//        if ((ui->lei_dnsAddr1->text() == "") &&
+//            (ui->lei_dnsAddr2->text() == "") &&
+//            (ui->lei_dnsAddr3->text() == ""))
+//        {
+
+//        }
+
+        QString IPaddr =  ui->lei_ipAddr->text();
+        QString subnetMask = ui->lei_subnetMask->text();
+        gateway = ui->lei_gateway->text();
+
+        //qDebug()<<this->IPaddr<<IPaddr;
+        //qDebug()<<this->subnetMask<<subnetMask;
+        if ((this->IPaddr != IPaddr) || (this->subnetMask != subnetMask))
         {
 
+            system("chmod +x netstatic.sh");
+            threadDialogTimer = new ThreadDialogTimer(tr("Setting up system network"), 5);
+            threadDialogTimer->start();
+            processDhcp = new QProcess(this);
+            QStringList arguments;
+            arguments.append(IPaddr);
+            arguments.append(subnetMask);
+            arguments.append(gateway);
+            connect(processDhcp, SIGNAL(finished(int)), this, SLOT(slot_DhcpFinished()));
+            processDhcp->start("sudo ./netstatic.sh", arguments, QIODevice::ReadOnly);
+            //system("sudo ./netstatic.sh " + IPaddr + " "+  subnetMask + " " + gateway);
+            //system("sudo ./netstatic.sh 192.168.100.141 255.255.255.0 192.168.100.1");
         }
-        if ((ui->lei_dnsAddr1->text() == "") &&
-            (ui->lei_dnsAddr2->text() == "") &&
-            (ui->lei_dnsAddr3->text() == ""))
+        else
         {
-
+            emit CloseWindow();
         }
     }
 }

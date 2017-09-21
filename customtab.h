@@ -60,6 +60,8 @@ private:
     void SetResolutionIndex();
     void StaticIPInit();
     void DhcpInit();
+    void AutoDNSInit();
+    void ManualDNSInit();
 public slots:
     void slot_ReadSystemResolution();
     void slot_ReadSystem();
