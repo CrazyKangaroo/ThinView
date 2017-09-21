@@ -13,6 +13,7 @@
 #include "threadloading.h"
 #include <QButtonGroup>
 #include <QFile>
+#include "threaddialogtimer.h"
 
 enum PageIndex
 {
@@ -43,11 +44,12 @@ private:
     QProcess * processResolution;
     QList<QString> resolutionList;
     QProcess * processSystem;
-    QProcess * processNetwork;
+    QProcess * processDhcp;
     LoadingDialog * loadingDialog;
     ThreadLoading threadLoading;
     QButtonGroup * buttonGroupIP;
     QButtonGroup * buttonGroupDNS;
+    ThreadDialogTimer * threadDialogTimer;
     QString IPaddr;
     QString subnetMask;
     QString gateway;
@@ -69,6 +71,8 @@ public slots:
     void onRadioButtonStaticIPClick();
     void onRadioButtonAutoDNSClick();
     void onRadioButtonManualDNSClick();
+    void onBtnNetworkSaveClick();
+    void slot_DhcpFinished();
 signals:
     void CloseWindow();
 };

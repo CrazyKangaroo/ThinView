@@ -40,7 +40,9 @@ SOURCES += \
     loadingdialog.cpp \
     dialog.cpp \
     ini.cpp \
-    threadloading.cpp
+    threadloading.cpp \
+    dialogtimer.cpp \
+    threaddialogtimer.cpp
 
 HEADERS += \
         widget.h \
@@ -59,7 +61,9 @@ HEADERS += \
     loadingdialog.h \
     dialog.h \
     ini.h \
-    threadloading.h
+    threadloading.h \
+    dialogtimer.h \
+    threaddialogtimer.h
 
 FORMS += \
         widget.ui \
@@ -70,7 +74,8 @@ FORMS += \
     customtab.ui \
     vmlistdialog.ui \
     loadingdialog.ui \
-    dialog.ui
+    dialog.ui \
+    dialogtimer.ui
 
 TRANSLATIONS = ThinView_zh_CN.ts
 

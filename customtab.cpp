@@ -19,8 +19,6 @@ CustomTab::CustomTab(QWidget *parent) :
     arguments.append("-a");
     processSystem->start("uname", arguments, QIODevice::ReadOnly);
 
-//    processNetwork = new QProcess(this);
-//    processNetwork->start("sudo ./netget.sh");
     system("chmod +x netget.sh");
     system("sudo ./netget.sh");
     IPaddr = QString::null;
@@ -131,6 +129,8 @@ void CustomTab::UIIint()
     connect(ui->rbn_staticIP, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonStaticIPClick()));
     connect(ui->rbn_autoDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonAutoDNSClick()));
     connect(ui->rbn_manualDNS, SIGNAL(clicked(bool)), this, SLOT(onRadioButtonManualDNSClick()));
+
+    connect(ui->btn_network_save, SIGNAL(clicked(bool)), this, SLOT(onBtnNetworkSaveClick()));
 }
 
 void CustomTab::DhcpInit()
@@ -227,6 +227,54 @@ void CustomTab::slot_ReadSystemResolution()
         }
         SetResolutionIndex();
     }
+}
+
+void CustomTab::onBtnNetworkSaveClick()
+{
+    if (ui->rbn_dhcp->isChecked())
+    {
+//        if (ui->rbn_autoDNS->isChecked())
+//        {
+
+//        }
+//        else
+//        {
+//            if ((ui->lei_dnsAddr1->text() == "") &&
+//                (ui->lei_dnsAddr2->text() == "") &&
+//                (ui->lei_dnsAddr3->text() == ""))
+//            {
+
+//            }
+//        }
+
+        threadDialogTimer = new ThreadDialogTimer(tr("Setting up system network"), 5);
+        threadDialogTimer->start();
+        processDhcp = new QProcess(this);
+        connect(processDhcp, SIGNAL(finished(int)), this, SLOT(slot_DhcpFinished()));
+        processDhcp->start("sudo ./dhcp.sh", QIODevice::ReadOnly);
+    }
+    else
+    {
+        if ((ui->lei_ipAddr->text() == "") &&
+            (ui->lei_ipAddr->text() == "") &&
+            (ui->lei_gateway->text() == ""))
+        {
+
+        }
+        if ((ui->lei_dnsAddr1->text() == "") &&
+            (ui->lei_dnsAddr2->text() == "") &&
+            (ui->lei_dnsAddr3->text() == ""))
+        {
+
+        }
+    }
+}
+
+void CustomTab::slot_DhcpFinished()
+{
+    threadDialogTimer->CloseWindow();
+    threadDialogTimer->wait();
+    emit CloseWindow();
 }
 
 void CustomTab::slot_ReadSystem()
