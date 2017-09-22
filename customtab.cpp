@@ -8,51 +8,54 @@ CustomTab::CustomTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    Ini ini;
-    ini.ReadBasicIni(serverAddr, port, autoEnable);
     UIIint();
-    ui->lei_serverAddr->setText(serverAddr);
-    ui->lei_port->setText(QString::number(port));
-    processSystem = new QProcess(this);
-    connect(processSystem, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_ReadSystem()));
-    QStringList arguments;
-    arguments.append("-a");
-    processSystem->start("uname", arguments, QIODevice::ReadOnly);
+    DataInit();
+}
 
-    system("chmod +x netget.sh");
-    system("sudo ./netget.sh");
-    IPaddr = QString::null;
-    subnetMask = QString::null;
-    gateway = QString::null;
-    DNS1 = QString::null;
-    DNS2 = QString::null;
-    DNS3 = QString::null;
+CustomTab::~CustomTab()
+{
+    delete ui;
+}
 
-    QFile file("nettmp.txt");
+void CustomTab::DNSInit()
+{
+    QFile file("/etc/resolvconf/resolv.conf.d/tail");
     if (file.open(QIODevice::ReadOnly))
     {
-        IPaddr = file.readLine();
-        subnetMask = file.readLine();
-        gateway = file.readLine();
-        //DNS1 = file.readLine();
-        //DNS2 = file.readLine();
-        //DNS3 = file.readLine();
+        ManualDNSInit();
+        bool result = file.seek(11);
+        if (result == true)
+        {
+            DNS1 = file.readLine();
+            file.seek(file.pos() + 11);
+            DNS2 = file.readLine();
+            file.seek(file.pos() + 11);
+            DNS3 = file.readLine();
 
-        file.close();
-        system("rm -rf nettmp.txt");
+            file.close();
 
-        IPaddr.replace(QString("\n"), QString(""));
-        subnetMask .replace(QString("\n"), QString(""));
-        gateway.replace(QString("\n"), QString(""));
+            DNS1.replace(QString("\n"), QString(""));
+            DNS2.replace(QString("\n"), QString(""));
+            DNS3.replace(QString("\n"), QString(""));
 
-
+            ui->lei_dnsAddr1->setText(DNS1);
+            ui->lei_dnsAddr2->setText(DNS2);
+            ui->lei_dnsAddr3->setText(DNS3);
+        }
     }
-
-    system("sudo cat /etc/network/interfaces > net_tmp.txt");
-    QFile file2("net_tmp.txt");
-    if (file2.open(QIODevice::ReadOnly))
+    else
     {
-        QByteArray text = file2.readAll();
+        AutoDNSInit();
+    }
+}
+
+void CustomTab::IPInit()
+{
+    system("sudo cat /etc/network/interfaces > net_tmp.txt");
+    QFile file("net_tmp.txt");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QByteArray text = file.readAll();
         if (text.indexOf("dhcp") >= 0)
         {
             DhcpInit();
@@ -65,42 +68,53 @@ CustomTab::CustomTab(QWidget *parent) :
             ui->lei_gateway->setText(gateway);
         }
 
-        file2.close();
+        file.close();
         system("rm -rf net_tmp.txt");
-    }
-
-    QFile file3("/etc/resolvconf/resolv.conf.d/tail");
-    if (file3.open(QIODevice::ReadOnly))
-    {
-        ManualDNSInit();
-        bool result = file3.seek(11);
-        if (result == true)
-        {
-            DNS1 = file3.readLine();
-            file3.seek(file3.pos() + 11);
-            DNS2 = file3.readLine();
-            file3.seek(file3.pos() + 11);
-            DNS3 = file3.readLine();
-
-            DNS1.replace(QString("\n"), QString(""));
-            DNS2.replace(QString("\n"), QString(""));
-            DNS3.replace(QString("\n"), QString(""));
-
-            ui->lei_dnsAddr1->setText(DNS1);
-            ui->lei_dnsAddr2->setText(DNS2);
-            ui->lei_dnsAddr3->setText(DNS3);
-            //qDebug()<<DNS1<<DNS2<<DNS3;
-        }
-    }
-    else
-    {
-        AutoDNSInit();
     }
 }
 
-CustomTab::~CustomTab()
+void CustomTab::DataInit()
 {
-    delete ui;
+    Ini ini;
+    ini.ReadBasicIni(serverAddr, port, autoEnable);
+
+    ui->lei_serverAddr->setText(serverAddr);
+    ui->lei_port->setText(QString::number(port));
+
+    GetPlatformInfo();
+    GetNetwordInfo();
+    IPInit();
+    DNSInit();
+}
+
+void CustomTab::GetNetwordInfo()
+{
+    system("chmod +x netget.sh");
+    system("sudo ./netget.sh");
+
+    QFile file("nettmp.txt");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        IPaddr = file.readLine();
+        subnetMask = file.readLine();
+        gateway = file.readLine();
+
+        file.close();
+        system("rm -rf nettmp.txt");
+
+        IPaddr.replace(QString("\n"), QString(""));
+        subnetMask.replace(QString("\n"), QString(""));
+        gateway.replace(QString("\n"), QString(""));
+    }
+}
+
+void CustomTab::GetPlatformInfo()
+{
+    processSystem = new QProcess(this);
+    connect(processSystem, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_ReadPaltFormInfo()));
+    QStringList arguments;
+    arguments.append("-a");
+    processSystem->start("uname", arguments, QIODevice::ReadOnly);
 }
 
 void CustomTab::UIIint()
@@ -281,84 +295,100 @@ void CustomTab::slot_ReadSystemResolution()
 
 void CustomTab::onBtnNetworkSaveClick()
 {
-    if (ui->rbn_dhcp->isChecked())
+    threadDialogTimer = new ThreadDialogTimer(tr("Setting up system network"), 5);
+    threadDialogTimer->start();
+
+    SetDNS();
+}
+
+void CustomTab::SetDNS()
+{
+    if (ui->rbn_autoDNS->isChecked())
     {
-//        if (ui->rbn_autoDNS->isChecked())
-//        {
-
-//        }
-//        else
-//        {
-//            if ((ui->lei_dnsAddr1->text() == "") &&
-//                (ui->lei_dnsAddr2->text() == "") &&
-//                (ui->lei_dnsAddr3->text() == ""))
-//            {
-
-//            }
-//        }
-
-        threadDialogTimer = new ThreadDialogTimer(tr("Setting up system network"), 5);
-        threadDialogTimer->start();
-        processDhcp = new QProcess(this);
-        connect(processDhcp, SIGNAL(finished(int)), this, SLOT(slot_DhcpFinished()));
-        processDhcp->start("sudo ./dhcp.sh", QIODevice::ReadOnly);
+        SetAutoDNS();
     }
     else
     {
-//        if ((ui->lei_ipAddr->text() == "") &&
-//            (ui->lei_ipAddr->text() == "") &&
-//            (ui->lei_gateway->text() == ""))
-//        {
+        SetManualDNS();
+    }
+}
+void CustomTab::SetManualDNS()
+{
+    DNS1 = ui->lei_dnsAddr1->text();
+    DNS2 = ui->lei_dnsAddr2->text();
+    DNS3 = ui->lei_dnsAddr3->text();
 
-//        }
-//        if ((ui->lei_dnsAddr1->text() == "") &&
-//            (ui->lei_dnsAddr2->text() == "") &&
-//            (ui->lei_dnsAddr3->text() == ""))
-//        {
+    QString strCmd ("sudo ./dns.sh " + DNS1 + " " + DNS2  + " " + DNS3);
+    char * cmd;
+    QByteArray temp = strCmd.toLatin1();
+    cmd = temp.data();
+    system("chmod +x dns.sh");
+    processDNS = new QProcess(this);
+    connect(processDNS, SIGNAL(finished(int)), this, SLOT(slot_DNSFinished()));
+    processDNS->start(cmd);
+}
 
-//        }
-
-        QString IPaddr =  ui->lei_ipAddr->text();
-        QString subnetMask = ui->lei_subnetMask->text();
-        gateway = ui->lei_gateway->text();
-
-        //qDebug()<<this->IPaddr<<IPaddr;
-        //qDebug()<<this->subnetMask<<subnetMask;
-        if ((this->IPaddr != IPaddr) || (this->subnetMask != subnetMask))
-        {
-
-            system("chmod +x netstatic.sh");
-            threadDialogTimer = new ThreadDialogTimer(tr("Setting up system network"), 5);
-            threadDialogTimer->start();
-            processDhcp = new QProcess(this);
-            QStringList arguments;
-            arguments.append(IPaddr);
-            arguments.append(subnetMask);
-            arguments.append(gateway);
-            connect(processDhcp, SIGNAL(finished(int)), this, SLOT(slot_DhcpFinished()));
-            processDhcp->start("sudo ./netstatic.sh", arguments, QIODevice::ReadOnly);
-            //system("sudo ./netstatic.sh " + IPaddr + " "+  subnetMask + " " + gateway);
-            //system("sudo ./netstatic.sh 192.168.100.141 255.255.255.0 192.168.100.1");
-        }
-        else
-        {
-            emit CloseWindow();
-        }
+void CustomTab::SetAutoDNS()
+{
+    processDNS = new QProcess(this);
+    connect(processDNS, SIGNAL(finished(int)), this, SLOT(slot_DNSFinished()));
+    processDNS->start("sudo ifdown eth0 \nifup eth0");
+    QFile file("/etc/resolvconf/resolv.conf.d/tail");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        system("sudo rm -rf /etc/resolvconf/resolv.conf.d/tail");
     }
 }
 
-void CustomTab::slot_DhcpFinished()
+void CustomTab::SetDhcp()
+{
+    system("chmod +x dhcp.sh");
+    processIP = new QProcess(this);
+    connect(processIP, SIGNAL(finished(int)), this, SLOT(slot_IPFinished()));
+    processIP->start("sudo ./dhcp.sh");
+}
+
+void CustomTab::SetStaticIP()
+{
+    IPaddr = ui->lei_ipAddr->text();
+    subnetMask = ui->lei_subnetMask->text();
+    gateway = ui->lei_gateway->text();
+
+    system("chmod +x netstatic.sh");
+
+    QString strCmd("sudo ./netstatic.sh " + IPaddr + " " + subnetMask + " " + gateway);
+    char * cmd;
+    QByteArray temp = strCmd.toLatin1();
+    cmd = temp.data();
+    processIP = new QProcess(this);
+    connect(processIP, SIGNAL(finished(int)), this, SLOT(slot_IPFinished()));
+    processIP->start(cmd);
+}
+
+void CustomTab::slot_DNSFinished()
+{
+    if (ui->rbn_dhcp->isChecked())
+    {
+        SetDhcp();
+    }
+    else
+    {
+        SetStaticIP();
+    }
+}
+
+
+void CustomTab::slot_IPFinished()
 {
     threadDialogTimer->CloseWindow();
     threadDialogTimer->wait();
     emit CloseWindow();
 }
 
-void CustomTab::slot_ReadSystem()
+void CustomTab::slot_ReadPaltFormInfo()
 {
     QByteArray text = processSystem->readAllStandardOutput();
     processSystem->close();
-    //qDebug()<<text;
 
     if (text.indexOf("x86") >= 0)
     {
@@ -374,8 +404,6 @@ void CustomTab::slot_ReadSystem()
         }
         SetResolutionIndex();
     }
-
-
 }
 
 void CustomTab::onCheckBoxAutoClick()
