@@ -57,6 +57,7 @@ private:
     QString DNS1 = QString::null;
     QString DNS2 = QString::null;
     QString DNS3 = QString::null;
+    bool isX86 = false;
     QString resolutionArray[5] = {"1920x1080", "1440x900", "1024x768", "1280x1024", "1280x720"};
     void SetResolutionIndex();
     void StaticIPInit();
@@ -73,6 +74,8 @@ private:
     void SetStaticIP();
     void SetAutoDNS();
     void SetManualDNS();
+    void SetResolution_x86(int resolutionIndex, QString currentResoluton);
+    void SetResolution_arm(int resolutionIndex, QString currentResoluton);
 public slots:
     void slot_ReadSystemResolution();
     void slot_ReadPaltFormInfo();

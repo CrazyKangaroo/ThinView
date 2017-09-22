@@ -8,6 +8,9 @@ CustomTab::CustomTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    Ini ini;
+    ini.ReadBasicIni(serverAddr, port, autoEnable);
+
     UIIint();
     DataInit();
 }
@@ -75,9 +78,6 @@ void CustomTab::IPInit()
 
 void CustomTab::DataInit()
 {
-    Ini ini;
-    ini.ReadBasicIni(serverAddr, port, autoEnable);
-
     ui->lei_serverAddr->setText(serverAddr);
     ui->lei_port->setText(QString::number(port));
 
@@ -392,6 +392,7 @@ void CustomTab::slot_ReadPaltFormInfo()
 
     if (text.indexOf("x86") >= 0)
     {
+        isX86 = true;
         processResolution = new QProcess(this);
         connect(processResolution, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_ReadSystemResolution()));
         processResolution->start("xrandr", QIODevice::ReadOnly);
@@ -431,60 +432,86 @@ void CustomTab::onBtnBasicSaveClick()
     autoEnable = ui->cco_auto->isChecked();
     resolutionIndex = ui->cbo_resolution->currentIndex();
 
+    //qDebug()<<resolutionIndex;
+
     Ini * ini = new Ini(this);
     connect(ini, SIGNAL(WriteBasicIniFinish()), this, SLOT(slot_WriteBasicIniFinish()));
 
     QDesktopWidget * desktop = QApplication::desktop();
     QString currentResoluton(QString::number(desktop->width()) + "x" + QString::number(desktop->height()));
 
-    if (autoEnable == true)
+    if (isX86)
     {
-        if (currentResoluton != resolutionList[0])
+        if (autoEnable == true)
         {
-            Dialog * dialog = new Dialog;
-            dialog->SetInfo(tr("Be sure to change the resolution to ") + resolutionList[0] + "?");
-            int result = dialog->exec();
-            if (result == QDialog::Accepted)
-            {
-                QProcess * processChangeResolution = new QProcess(this);
-                QStringList arguments;
-                arguments.append("-s");
-                arguments.append(resolutionList[0]);
-                processChangeResolution->start("xrandr", arguments, QIODevice::ReadOnly);
-                qApp->quit();
-                QProcess::startDetached(qApp->applicationFilePath(), QStringList());
-            }
+            SetResolution_x86(0, currentResoluton);
         }
         else
         {
-            threadLoading.start();
+            SetResolution_x86(resolutionIndex, currentResoluton);
         }
     }
     else
     {
-        if (currentResoluton != resolutionArray[resolutionIndex])
+        if (autoEnable == true)
         {
-            Dialog * dialog = new Dialog;
-            dialog->SetInfo(tr("Be sure to change the resolution to ") + resolutionArray[resolutionIndex] + "?");
-            int result = dialog->exec();
-            if (result == QDialog::Accepted)
-            {
-                QProcess * processChangeResolution = new QProcess(this);
-                QStringList arguments;
-                arguments.append("-s");
-                arguments.append(resolutionArray[resolutionIndex]);
-                processChangeResolution->start("xrandr", arguments, QIODevice::ReadOnly);
-                qApp->quit();
-                QProcess::startDetached(qApp->applicationFilePath(), QStringList());
-            }
+            SetResolution_arm(0, currentResoluton);
         }
         else
         {
-            threadLoading.start();
+            SetResolution_arm(resolutionIndex, currentResoluton);
         }
     }
 
     ini->WriteBasicIni(serverAddr, port, autoEnable);
+}
+
+void CustomTab::SetResolution_x86(int resolutionIndex, QString currentResoluton)
+{
+    if (currentResoluton != resolutionList[resolutionIndex])
+    {
+        Dialog * dialog = new Dialog;
+        dialog->SetInfo(tr("Be sure to change the resolution to ") + resolutionList[resolutionIndex] + "?");
+        int result = dialog->exec();
+        if (result == QDialog::Accepted)
+        {
+            QProcess * processChangeResolution = new QProcess(this);
+            QStringList arguments;
+            arguments.append("-s");
+            arguments.append(resolutionList[resolutionIndex]);
+            processChangeResolution->start("xrandr", arguments, QIODevice::ReadOnly);
+            qApp->quit();
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList());
+        }
+    }
+    else
+    {
+        threadLoading.start();
+    }
+}
+
+void CustomTab::SetResolution_arm(int resolutionIndex, QString currentResoluton)
+{
+    if (currentResoluton != resolutionArray[resolutionIndex])
+    {
+        Dialog * dialog = new Dialog;
+        dialog->SetInfo(tr("Be sure to change the resolution to ") + resolutionArray[resolutionIndex] + "?");
+        int result = dialog->exec();
+        if (result == QDialog::Accepted)
+        {
+            QProcess * processChangeResolution = new QProcess(this);
+            QStringList arguments;
+            arguments.append("-s");
+            arguments.append(resolutionArray[resolutionIndex]);
+            processChangeResolution->start("xrandr", arguments, QIODevice::ReadOnly);
+            qApp->quit();
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList());
+        }
+    }
+    else
+    {
+        threadLoading.start();
+    }
 }
 
 void CustomTab::SetResolutionIndex()
@@ -492,7 +519,7 @@ void CustomTab::SetResolutionIndex()
     QDesktopWidget * desktop = QApplication::desktop();
     QString currentResoluton(QString::number(desktop->width()) + "x" + QString::number(desktop->height()));
 
-    if (autoEnable == true)
+    if (isX86 == true)
     {
         for (int i = 0; i < resolutionList.size(); i++)
         {
